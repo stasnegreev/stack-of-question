@@ -1,0 +1,72 @@
+[debug] [2019-11-10T15:07:02.198Z] ----------------------------------------------------------------------
+[debug] [2019-11-10T15:07:02.200Z] Command:       C:\Program Files\nodejs\node.exe E:\MySelf\Projects\stack-of-quetions\stack-of-quetions\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-11-10T15:07:02.201Z] CLI Version:   7.7.0
+[debug] [2019-11-10T15:07:02.201Z] Platform:      win32
+[debug] [2019-11-10T15:07:02.201Z] Node Version:  v10.16.3
+[debug] [2019-11-10T15:07:02.203Z] Time:          Sun Nov 10 2019 18:07:02 GMT+0300 (GMT+03:00)
+[debug] [2019-11-10T15:07:02.203Z] ----------------------------------------------------------------------
+[debug] [2019-11-10T15:07:02.203Z] 
+[debug] [2019-11-10T15:07:02.211Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-11-10T15:07:02.212Z] > authorizing via signed-in user
+[debug] [2019-11-10T15:07:02.212Z] [iam] checking project stack-of-questions for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2019-11-10T15:07:02.214Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/stack-of-questions:testIamPermissions  
+
+[debug] [2019-11-10T15:07:03.196Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-10T15:07:03.202Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/stack-of-questions  
+ 
+[debug] [2019-11-10T15:07:03.506Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'stack-of-questions'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2019-11-10T15:07:03.516Z] >>> HTTP REQUEST PUT https://stack-of-questions.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+[debug] [2019-11-10T15:07:04.238Z] <<< HTTP RESPONSE 404
+[debug] [2019-11-10T15:07:04.239Z] <<< HTTP RESPONSE BODY {
+  "error" : "Firebase error. Please ensure that you spelled the name of your Firebase correctly"
+}
+
+[error] 
+[error] Error: Unexpected error while deploying database rules.
+[debug] [2019-11-10T15:21:07.554Z] ----------------------------------------------------------------------
+[debug] [2019-11-10T15:21:07.558Z] Command:       C:\Program Files\nodejs\node.exe E:\MySelf\Projects\stack-of-quetions\stack-of-quetions\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-11-10T15:21:07.559Z] CLI Version:   7.7.0
+[debug] [2019-11-10T15:21:07.559Z] Platform:      win32
+[debug] [2019-11-10T15:21:07.559Z] Node Version:  v10.16.3
+[debug] [2019-11-10T15:21:07.560Z] Time:          Sun Nov 10 2019 18:21:07 GMT+0300 (GMT+03:00)
+[debug] [2019-11-10T15:21:07.560Z] ----------------------------------------------------------------------
+[debug] [2019-11-10T15:21:07.560Z] 
+[debug] [2019-11-10T15:21:07.570Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-11-10T15:21:07.570Z] > authorizing via signed-in user
+[debug] [2019-11-10T15:21:07.570Z] [iam] checking project stack-of-questions for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2019-11-10T15:21:07.572Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/stack-of-questions:testIamPermissions  
+
+[debug] [2019-11-10T15:21:08.497Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-10T15:21:08.508Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/stack-of-questions  
+ 
+[debug] [2019-11-10T15:21:08.873Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'stack-of-questions'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2019-11-10T15:21:08.898Z] >>> HTTP REQUEST PUT https://stack-of-questions.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+[debug] [2019-11-10T15:21:09.603Z] <<< HTTP RESPONSE 404
+[debug] [2019-11-10T15:21:09.604Z] <<< HTTP RESPONSE BODY {
+  "error" : "Firebase error. Please ensure that you spelled the name of your Firebase correctly"
+}
+
+[error] 
+[error] Error: Unexpected error while deploying database rules.

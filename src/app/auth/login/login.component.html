@@ -1,0 +1,79 @@
+<div class="auth-content">
+  <div
+    class="alert alert-{{message.type}}"
+    *ngIf="message.text"
+  >
+    {{message.text}}
+  </div>
+  <p class="text-xs-center">Войдите для работы</p>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div
+      class="form-group"
+
+    >
+      <label for="email">Email</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngClass]="{'is-invalid': loginForm.get('email').invalid && loginForm.get('email').touched}"
+        id="email"
+        placeholder="Введите ваш email"
+        formControlName="email"
+      >
+      <span
+        class="invalid-feedback"
+        *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched"
+      >
+        <span *ngIf="loginForm.get('email').errors.email">Incorrect email address</span>
+        <span *ngIf="loginForm.get('email').errors.required">Email is required</span>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <input
+        type="password"
+        class="form-control"
+        [ngClass]="{'is-invalid': loginForm.get('password').invalid && loginForm.get('password').touched}"
+        id="password"
+        placeholder="Пароль"
+        formControlName="password"
+      >
+      <span
+        class="invalid-feedback"
+        *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched"
+      >
+        <span *ngIf="loginForm.get('password').errors.minlength">Password must be at least 6 characters long</span>
+        <span *ngIf="loginForm.get('password').errors.required">Password is required</span>
+      </span>
+    </div>
+    <div class="form-group">
+      <button
+        type="submit"
+        class="btn btn-block btn-primary"
+        [disabled]="loginForm.invalid"
+      >
+        Войти
+      </button>
+    </div>
+    <div class="form-group">
+      <p class="text-muted text-center">
+        Нет аккаунта? <a [routerLink]="'/registration'">Зарегистрироваться!</a>
+      </p>
+    </div>
+    <button
+      (click)="onRegGoogle()"
+      class="btn btn-block btn-outline-danger"
+    >
+      Войти с Google
+    </button>
+    <button
+      (click)="onRegFacebook()"
+      class="btn btn-block btn-outline-primary"
+    >
+      Войти с Facebook
+    </button>
+  </form>
+</div>

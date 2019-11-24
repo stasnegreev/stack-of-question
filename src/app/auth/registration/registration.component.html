@@ -1,0 +1,64 @@
+<div class="auth-content">
+  <p class="text-xs-center">Регистрация для получения доступа</p>
+  <form
+    [formGroup]="regForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        class="form-control underlined"
+        formControlName="email"
+        [ngClass]="{'is-invalid' : regForm.get('email').invalid && regForm.get('email').touched}"
+        id="email"
+        placeholder="Введите email"
+      >
+      <span
+        class="invalid-feedback"
+        *ngIf="regForm.get('email').invalid && regForm.get('email').touched"
+      >
+        <span *ngIf="regForm.get('email').errors.email">Incorrect email address</span>
+        <span *ngIf="regForm.get('email').errors.required">Email is required</span>
+        <span *ngIf="regForm.get('email').errors['forbiddenEmails']">This email does exist</span>
+      </span>
+    </div>
+    <div class="form-group has-error">
+      <label for="password">Пароль</label>
+      <input
+        type="password"
+        class="form-control underlined"
+        formControlName="password"
+        [ngClass]="{'is-invalid' : regForm.get('password').invalid && regForm.get('password').touched}"
+        id="password"
+        placeholder="Введите пароль"
+      >
+      <span
+        class="invalid-feedback"
+        *ngIf="regForm.get('password').invalid && regForm.get('password').touched"
+      >
+        <span *ngIf="regForm.get('password').errors.minlength">Password must be at least 6 characters long</span>
+        <span *ngIf="regForm.get('password').errors.required">Password is required</span>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <button
+        type="submit"
+        class="btn btn-block btn-primary"
+        [disabled]="regForm.invalid"
+      >
+        Зарегистрироваться
+      </button>
+    </div>
+    <div class="form-group">
+      <p class="text-muted text-xs-center">
+        Уже есть аккаунт?
+        <a  [routerLink]="'/login'">
+          Войти!
+        </a>
+      </p>
+    </div>
+
+  </form>
+</div>

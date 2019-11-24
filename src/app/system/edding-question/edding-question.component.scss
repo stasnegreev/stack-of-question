@@ -1,0 +1,59 @@
+.newQuestion{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid darkslategrey;
+  border-radius: 5px;
+  padding: 10px 10px;
+  .newQuestion__title{
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px darkslategrey solid;
+    padding: 10px 0;
+  }
+  .newQuestion__form{
+    width: 100%;
+  }
+}
+.formQuestion{
+  width: 100%;
+  .formQuestion__item{
+    display: flex;
+    position: relative;
+    margin-bottom: 2em;
+    .formQuestion__lable{
+      min-width: 100px;
+    }
+    .formQuestion__input{
+      width: 100%;
+      .formQuestion__checkboxItem{
+        padding: 0 10px;
+        .formQuestion__checkbox{
+          -ms-transform: scale(2); /* IE */
+          -moz-transform: scale(2); /* FF */
+          -webkit-transform: scale(2); /* Safari and Chrome */
+          -o-transform: scale(2); /* Opera */
+          transform: scale(2);
+          padding: 10px;
+        }
+        .formQuestion__checkbox-lable{
+          display: inline;
+          padding-left: 15px;
+        }
+      }
+    }
+    .formQuestion__textarea{
+      height: 200px;
+    }
+    .formQuestion__hint{
+      position: absolute;
+      top:40px;
+      left:100px;
+    }
+
+  }
+  .formQuestion__button{
+    display: flex;
+    justify-content: flex-end;
+  }
+}

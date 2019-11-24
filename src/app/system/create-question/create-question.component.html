@@ -1,0 +1,79 @@
+<section>
+  <div class="container newQuestion">
+      <h2 class="newQuestion__title"> New Question</h2>
+    <hr>
+    <div class="newQuestion__form">
+      <form
+        class="formQuestion"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="formQuestion__item form-group">
+          <label class="formQuestion__lable">
+            Title
+          </label>
+          <input
+            class="formQuestion__input form-control"
+            formControlName="title"
+            id="title"
+            type="text"
+          >
+          <span
+            class="formQuestion__hint"
+            *ngIf="form.get('title').invalid && form.get('title').touched"
+          >
+            <span class="form-text text-muted" *ngIf="form.get('title')['errors']['required']">Title is required</span>
+            <span class="form-text text-muted" *ngIf="form.get('title')['errors']['forbiddenTitle']">This title already exists</span>
+          </span>
+        </div>
+        <div class="formQuestion__item form-group">
+          <label class="formQuestion__lable">
+            Text
+          </label>
+          <textarea
+            class="formQuestion__input formQuestion__textarea form-control"
+            formControlName="text"
+          >
+          </textarea>
+        </div>
+        <div
+          class="formQuestion__item form-group"
+          formGroupName="tags"
+        >
+          <label class="formQuestion__lable">
+            Tags
+          </label>
+          <ul class="formQuestion__checkboxList formQuestion__input">
+            <li class="formQuestion__checkboxItem ">
+              <input
+                type="checkbox"
+                class="formQuestion__checkbox "
+                formControlName="tag1"
+                value="Tag 1"
+              >
+              <label class="formQuestion__checkbox-lable " >Tag 1</label>
+            </li>
+            <li class="formQuestion__checkboxItem ">
+              <input
+                type="checkbox"
+                class="formQuestion__checkbox"
+                formControlName="tag2"
+                value="Tag 2"
+              >
+              <label class="formQuestion__checkbox-lable " >Tag 2</label>
+            </li>
+          </ul>
+        </div>
+        <div class="formQuestion__button form-group">
+          <button
+            type="submit"
+            class="btn btn btn-outline-dark"
+            [disabled]="form.invalid"
+          >
+            Add question</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>

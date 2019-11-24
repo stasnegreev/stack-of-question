@@ -1,0 +1,59 @@
+<header>
+  <div class="container header">
+    <div class="header__row">
+      <div class="header__button">
+        <div class="btn btn-outline-info">
+          Filters
+        </div>
+      </div>
+      <div class="header__button">
+        <div class="btn btn-outline-info">
+          Sort
+        </div>
+      </div>
+      <div class="header__button">
+        <div class="btn btn-outline-info">
+          Settings
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="questions">
+  <div class="container">
+    <div class="questions__row">
+      <ul class="questions__list questions__list-line">
+        <li
+          class="questions__item"
+          *ngFor="let d of data"
+        >
+          <div class="question question-line">
+            <h3 class="question__title">{{d[1].title}}</h3>
+            <div class="question__info">
+              <div class="question__date">
+                {{d[1].date | date:"M.d.yy"}}
+              </div>
+              <div class="question__tags">
+                <span
+                  *ngFor="let t of d[1].tags"
+                  class="question__tag"
+                >{{t}}</span>
+              </div>
+            </div>
+            <div class="question__control">
+              <div class="btn-group question__buttons" role="group" aria-label="Basic example">
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  [routerLink]="['/system/eddingQuestion']"
+                  [fragment]="(d[0] + '')"
+                >Edit</button>
+                <button type="button" class="btn btn-outline-dark">Delete</button>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

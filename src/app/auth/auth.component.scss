@@ -1,0 +1,31 @@
+.auth {
+  min-height: 100vh;
+  display: block;
+  border: #1f7e9a solid 2px;
+  background-color: #4f5f6f;
+}
+.auth__card {
+  background-color: white;
+
+  margin: 10% auto 0 auto;
+  max-width:450px;
+  min-height:330px;
+  padding: 15px;
+  header {
+    display: flex;
+    align-items: center;
+    color: #9ba8b5;
+    .logo {
+      .side__logo {
+        border: solid 10px #0e1a35;
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+      }
+    }
+    h1 {
+      margin-left: 15px;
+    }
+  }
+}
+
