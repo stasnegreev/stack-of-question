@@ -2,7 +2,7 @@
   <div class="container header">
     <div class="header__row">
       <div class="header__button">
-        <div class="btn btn-outline-info">
+        <div class="btn btn-outline-info" (click)="openFilter()">
           Filters
         </div>
       </div>
@@ -19,6 +19,11 @@
     </div>
   </div>
 </header>
+<soq-home-filter
+  *ngIf="isFilterOpen"
+  (onFilterCancel)="onFilterCancel()"
+  (onFilterApply)="onFilterApply($event)"
+></soq-home-filter>
 <div class="questions">
   <div class="container">
     <div class="questions__row">
@@ -46,7 +51,7 @@
                   type="button"
                   class="btn btn-outline-dark"
                   [routerLink]="['/system/eddingQuestion']"
-                  [fragment]="(d[0] + '')"
+                  [fragment]="(d[1].title)"
                 >Edit</button>
                 <button type="button" class="btn btn-outline-dark">Delete</button>
               </div>

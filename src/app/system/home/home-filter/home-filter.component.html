@@ -1,0 +1,117 @@
+<div class="modal fade in">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Фильтр</h4>
+        <button type="button" class="close" (click)="closeFilter()">
+          <span>×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="newQuestion__form">
+          <form
+            class="formQuestion"
+            [formGroup]="form"
+            (ngSubmit)="onSubmit()"
+          >
+            <div
+              class="formQuestion__item form-group"
+              formGroupName="tags"
+            >
+              <label class="formQuestion__lable">
+                Tags
+              </label>
+              <ul class="formQuestion__checkboxList formQuestion__input">
+                <li class="formQuestion__checkboxItem ">
+                  <input
+                    type="checkbox"
+                    class="formQuestion__checkbox "
+                    formControlName="tag1"
+                    value="Tag 1"
+                  >
+                  <label class="formQuestion__checkbox-lable " >Tag 1</label>
+                </li>
+                <li class="formQuestion__checkboxItem ">
+                  <input
+                    type="checkbox"
+                    class="formQuestion__checkbox"
+                    formControlName="tag2"
+                    value="Tag 2"
+                  >
+                  <label class="formQuestion__checkbox-lable " >Tag 2</label>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="formQuestion__item form-group"
+              formGroupName="status"
+            >
+              <label class="formQuestion__lable">
+                Status
+              </label>
+              <ul class="formQuestion__checkboxList formQuestion__input">
+                <li class="formQuestion__checkboxItem ">
+                  <input
+                    type="checkbox"
+                    class="formQuestion__checkbox "
+                    formControlName="answered"
+                    value="answered"
+                  >
+                  <label class="formQuestion__checkbox-lable ">Answered</label>
+                </li>
+                <li class="formQuestion__checkboxItem ">
+                  <input
+                    type="checkbox"
+                    class="formQuestion__checkbox"
+                    formControlName="noAnswered"
+                    value="noAnswered"
+                  >
+                  <label class="formQuestion__checkbox-lable">Not answered</label>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="formQuestion__item form-group"
+            >
+              <label class="formQuestion__lable">
+                Date from
+              </label>
+              <input
+                class="formQuestion__input form-control"
+                formControlName="dateFrom"
+                id="dateFrom"
+                type="text"
+              >
+            </div>
+            <div
+              class="formQuestion__item form-group"
+            >
+              <label class="formQuestion__lable">
+                Date to
+              </label>
+              <input
+                class="formQuestion__input form-control"
+                formControlName="dateTo"
+                id="dateTo"
+                type="text"
+              >
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeFilter()"
+          >Отмена</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="apllyFilter()"
+          >Применить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -8,6 +8,7 @@ import {HomeComponent} from "./home/home.component";
 import {CreateQuestionComponent} from "./create-question/create-question.component";
 import {QuestionComponent} from "./question/question.component";
 import {EddingQuestionComponent} from './edding-question/edding-question.component';
+import {HomeFilterComponent} from './home/home-filter/home-filter.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const routes: Routes = [

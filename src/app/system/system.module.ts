@@ -8,6 +8,7 @@ import { CreateQuestionComponent } from './create-question/create-question.compo
 import { QuestionComponent } from './question/question.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { EddingQuestionComponent } from './edding-question/edding-question.component';
+import { HomeFilterComponent } from './home/home-filter/home-filter.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { EddingQuestionComponent } from './edding-question/edding-question.compo
     CreateQuestionComponent,
     QuestionComponent,
     EddingQuestionComponent,
+    HomeFilterComponent,
   ],
   imports: [
     CommonModule,
