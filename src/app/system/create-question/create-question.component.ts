@@ -49,9 +49,9 @@ export class CreateQuestionComponent implements OnInit {
         delete tags[key];
       }
     }
-    this.question = new Question(title, text, tags, ((new Date()) + ''), 'notApproved', this.userService.getUserId().uid);
-    console.log('push to db: ', this.question);
-    this.questionService.addQuestion(this.question);
+    //this.question = new Question(title, text, tags, ((new Date()) + ''), 'notApproved', this.userService.getUserId().uid);
+    //console.log('push to db: ', this.question);
+    //this.questionService.addQuestion(this.question);
   }
 
   forbiddenTitle(control: FormControl): Promise<any> {

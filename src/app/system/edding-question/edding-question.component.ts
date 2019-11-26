@@ -15,6 +15,7 @@ export class EddingQuestionComponent implements OnInit {
 
   form: FormGroup;
   questionId: any;
+  question: Question
 
   constructor(
     private questionService: QuestionService,
@@ -27,8 +28,17 @@ export class EddingQuestionComponent implements OnInit {
     this.questionId = this.route.fragment;
     console.log('questionId=', this.questionId.value);
     this.questionService.getQuestionById(this.questionId.value)
-      .subscribe((questions: Question[]) => {
-        console.log('questions=', questions);
+      .subscribe((question: Question) => {
+        this.question = question;
+        console.log('question to edit=', this.question);
+        this.form.patchValue({
+          'title': this.question.title,
+          'text': this.question.text,
+          'tags': {
+            'tag1': true,
+            'tag2': false,
+          }
+        });
       });
     this.form = new FormGroup({
       'title': new FormControl(
@@ -48,7 +58,13 @@ export class EddingQuestionComponent implements OnInit {
   }
 
   onSubmit() {
-    //const {title, text, tags} = this.form.value;
+    const {title, text, tags} = this.form.value;
+    this.question.title = title;
+    this.question.text = text;
+    this.question.tags = tags;
+    console.log('this.form.value=', this.form.value);
+    console.log('this.question=', this.question);
+    this.questionService.updateQuestion(this.questionId.value, this.question);
     //for (const key in tags) {
     //  if (tags[key] !== true) {
     //    delete tags[key];
@@ -65,8 +81,11 @@ export class EddingQuestionComponent implements OnInit {
         .subscribe((questions: Question[]) => {
           console.log('forbiddenTitle questions=', questions);
           if (questions.length) {
-            console.log('novalid');
-            resolve({forbiddenTitle: true});
+            if (questions[0].title !== this.question.title) {
+              console.log('novalid', questions);
+              resolve({forbiddenTitle: true});
+            }
+
           } else {
             console.log('valid');
             resolve(null);

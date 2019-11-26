@@ -20,32 +20,16 @@ export class HomeComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
   ) { }
+
   ngOnInit() {
     this.questionService.getAllUserQuestion()
-      .subscribe( (data: object) => {
-        console.log('data=', data);
-        this.data = Object.entries(data).filter((item) => {
-          if (Object.keys(item[1].tags).forEach()item[1].tags   fiterParams.tags)) {
-            if (item[1].status.indexOf(this.fiterParams.status)) {
-              if (item[1].date > this.fiterParams.dateFrom && item[1].date < this.fiterParams.dateTo) {
-                return item;
-              }
-            }
-          }
-        });
-
-        console.log('this.data=', this.data);
-        let i = 0;
-        for (const item in data) {
-          this.questions[i] = data[item];
-          this.questions[i].tags = Object.keys(this.questions[i].tags);
-          i++;
-        }
-
-        console.log('this.questions=', this.questions);
+      .subscribe((d: Question[]) => {
+        this.questions = d;
+        this.questions.forEach((i) => i.tags = Object.keys(i.tags));
+        console.log('questions=', this.questions);
       });
+  }
 
-  };
   openFilter() {
     this.isFilterOpen = true;
   }

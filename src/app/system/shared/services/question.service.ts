@@ -3,6 +3,7 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import {AngularFireDatabase, AngularFireObject } from "@angular/fire/database";
 import {Question} from "../models/question.model";
 import {Observable} from "rxjs";
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,10 @@ export class QuestionService {
   list: Observable<any>;
   itemRef: AngularFireObject<any>;
   questions: any;
+  items: Observable<any[]>;
   constructor(
     public db: AngularFireDatabase
   ) {
-    this.list = db.list('questions').valueChanges();
     this.itemRef = db.object('questions');
     this.questions = db.list('questions');
   }
@@ -24,15 +25,21 @@ export class QuestionService {
     newPostRef.set(question);
   }
   updateQuestion(key: string, question: Question) {
-    this.questions.update(key, question);
+    this.db.object('/questions/' + key).update(question);
+  }
+  getAllUserQuestion() {
+    return this.questions.snapshotChanges().pipe(
+      map((changes: []) => {
+        return changes.map((c: any) => {
+          return  {...c.payload.val(), key: c.payload.key};
+        });
+      })
+    );
+  }
+  getQuestionById(key: string) {
+    console.log('id=', key);
+    return this.db.object('/questions/' + key).valueChanges();
   }
 
-  getAllUserQuestion() {
-    return this.list = this.db.object('questions').valueChanges();
-  }
-  getQuestionById(id: string) {
-    console.log('id=', id);
-    return this.db.object('questions').valueChanges();
-  }
 }
 

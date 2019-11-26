@@ -7,8 +7,22 @@
         </div>
       </div>
       <div class="header__button">
-        <div class="btn btn-outline-info">
-          Sort
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort
+          </button>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <a
+              class="dropdown-item"
+            >
+              Dote lower
+            </a>
+            <a
+              class="dropdown-item"
+            >
+              Dote upper
+            </a>
+          </div>
         </div>
       </div>
       <div class="header__button">
@@ -30,17 +44,17 @@
       <ul class="questions__list questions__list-line">
         <li
           class="questions__item"
-          *ngFor="let d of data"
+          *ngFor="let q of this.questions"
         >
           <div class="question question-line">
-            <h3 class="question__title">{{d[1].title}}</h3>
+            <h3 class="question__title">{{q.title}}</h3>
             <div class="question__info">
               <div class="question__date">
-                {{d[1].date | date:"M.d.yy"}}
+                {{q.date | date:"M.d.yy"}}
               </div>
               <div class="question__tags">
                 <span
-                  *ngFor="let t of d[1].tags"
+                  *ngFor="let t of q.tags"
                   class="question__tag"
                 >{{t}}</span>
               </div>
@@ -51,7 +65,7 @@
                   type="button"
                   class="btn btn-outline-dark"
                   [routerLink]="['/system/eddingQuestion']"
-                  [fragment]="(d[1].title)"
+                  [fragment]="(q.key)"
                 >Edit</button>
                 <button type="button" class="btn btn-outline-dark">Delete</button>
               </div>
