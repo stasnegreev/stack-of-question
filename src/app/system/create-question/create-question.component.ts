@@ -15,7 +15,7 @@ import {toArray} from 'rxjs/operators';
 export class CreateQuestionComponent implements OnInit {
 
   form: FormGroup;
-  question: Question
+  question: any;
   questions: Question[];
 
   constructor(
@@ -44,14 +44,16 @@ export class CreateQuestionComponent implements OnInit {
   }
   onSubmit() {
     const {title, text, tags} = this.form.value;
-    for (const key in tags) {
-      if (tags[key] !== true) {
-        delete tags[key];
-      }
-    }
-    //this.question = new Question(title, text, tags, ((new Date()) + ''), 'notApproved', this.userService.getUserId().uid);
-    //console.log('push to db: ', this.question);
-    //this.questionService.addQuestion(this.question);
+    this.question = {
+      author: this.userService.getUserId().uid,
+      date: ((new Date()) + ''),
+      status: 'notApproved',
+      tags: tags,
+      text: text,
+      title: title
+    };
+    console.log('push to db: ', this.question);
+    this.questionService.addQuestion(this.question);
   }
 
   forbiddenTitle(control: FormControl): Promise<any> {

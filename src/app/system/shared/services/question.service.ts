@@ -20,7 +20,7 @@ export class QuestionService {
     this.questions = db.list('questions');
   }
 
-  addQuestion(question: Question) {
+  addQuestion(question: any) {
     const newPostRef = this.questions.push();
     newPostRef.set(question);
   }
