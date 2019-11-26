@@ -4,7 +4,7 @@ import {QuestionService} from '../shared/services/question.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {UserService} from '../../shared/services/user.service';
 import {Question} from '../shared/models/question.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'soq-edding-question',
@@ -22,6 +22,7 @@ export class EddingQuestionComponent implements OnInit {
     public db: AngularFireDatabase,
     private userService: UserService,
     private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -65,14 +66,7 @@ export class EddingQuestionComponent implements OnInit {
     console.log('this.form.value=', this.form.value);
     console.log('this.question=', this.question);
     this.questionService.updateQuestion(this.questionId.value, this.question);
-    //for (const key in tags) {
-    //  if (tags[key] !== true) {
-    //    delete tags[key];
-    //  }
-    //}
-    //this.question = new Question(title, text, tags, ((new Date()) + ''), 'notApproved', this.userService.getUserId().uid);
-    //console.log('push to db: ', this.question);
-    //this.questionService.updateQuestion(this.question);
+    this.router.navigate(['/system/home']);
   }
 
   forbiddenTitle(control: FormControl): Promise<any> {

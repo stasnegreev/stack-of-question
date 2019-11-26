@@ -1,16 +1,17 @@
 .auth {
   min-height: 100vh;
   display: block;
-  border: #1f7e9a solid 2px;
-  background-color: #4f5f6f;
+  background-color: white;
+
 }
 .auth__card {
   background-color: white;
-
+  border: 2px solid darkslategrey;
+  border-radius: 5px;
+  padding: 10px 10px;
   margin: 10% auto 0 auto;
   max-width:450px;
   min-height:330px;
-  padding: 15px;
   header {
     display: flex;
     align-items: center;

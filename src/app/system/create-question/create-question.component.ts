@@ -4,8 +4,11 @@ import {AngularFireDatabase} from '@angular/fire/database';
 
 import {QuestionService} from "../shared/services/question.service";
 import {Question} from "../shared/models/question.model";
+import {QuestionNew} from "../shared/models/questionNew.model";
+
 import {UserService} from '../../shared/services/user.service';
 import {toArray} from 'rxjs/operators';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'soq-create-question',
@@ -15,13 +18,14 @@ import {toArray} from 'rxjs/operators';
 export class CreateQuestionComponent implements OnInit {
 
   form: FormGroup;
-  question: any;
-  questions: Question[];
+  questionNew: QuestionNew;
+  questions: Question;
 
   constructor(
     private questionService: QuestionService,
     public db: AngularFireDatabase,
     private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -44,16 +48,10 @@ export class CreateQuestionComponent implements OnInit {
   }
   onSubmit() {
     const {title, text, tags} = this.form.value;
-    this.question = {
-      author: this.userService.getUserId().uid,
-      date: ((new Date()) + ''),
-      status: 'notApproved',
-      tags: tags,
-      text: text,
-      title: title
-    };
-    console.log('push to db: ', this.question);
-    this.questionService.addQuestion(this.question);
+    this.questionNew = new QuestionNew(this.userService.getUserId().uid, ((new Date()) + ''), 'notApproved', tags, text, title);
+    console.log('push to db: ', this.questionNew);
+    this.questionService.addQuestion(this.questionNew);
+    this.router.navigate(['/system/home']);
   }
 
   forbiddenTitle(control: FormControl): Promise<any> {

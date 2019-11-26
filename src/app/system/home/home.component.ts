@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     this.questionService.getAllUserQuestion()
       .subscribe((d: Question[]) => {
         this.questions = d;
-        this.questions.forEach((i) => i.tags = Object.keys(i.tags));
+
         console.log('questions=', this.questions);
       });
   }

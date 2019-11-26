@@ -12,12 +12,14 @@
           <button
             *ngIf="curentUrl==='/login'"
             class="btn badge-info"
+            routerLink="/registration"
           >
-            SignIn
+            SignUp
           </button>
           <button
             *ngIf="curentUrl==='/registration'"
             class="btn badge-info"
+            routerLink = "/login"
           >
             LogIn
           </button>
@@ -35,21 +37,21 @@
           >
             New question
           </button>
-          <div class="dropdown">
+          <div
+            class="dropdown"
+            *ngIf="curentUrl.indexOf('system')+1"
+          >
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               User
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
               <a
                 class="dropdown-item"
-                *ngIf="curentUrl.indexOf('system')+1"
-                routerLink="/system/createQuestion"
               >
                 Profile
               </a>
               <a
                 class="dropdown-item"
-                *ngIf="curentUrl.indexOf('system')+1"
                 (click)="onLogOut()"
               >
                 SignOut

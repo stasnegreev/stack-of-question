@@ -58,11 +58,7 @@
         Войти
       </button>
     </div>
-    <div class="form-group">
-      <p class="text-muted text-center">
-        Нет аккаунта? <a [routerLink]="'/registration'">Зарегистрироваться!</a>
-      </p>
-    </div>
+
     <button
       (click)="onRegGoogle()"
       class="btn btn-block btn-outline-danger"
@@ -75,5 +71,10 @@
     >
       Войти с Facebook
     </button>
+    <div class="form-group">
+      <p class="text-muted text-center">
+        Нет аккаунта? <a [routerLink]="'/registration'">Зарегистрироваться!</a>
+      </p>
+    </div>
   </form>
 </div>

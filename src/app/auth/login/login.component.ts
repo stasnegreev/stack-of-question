@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
       //user.email = result.user.email;
       console.log('result.user.email=', result.user.email);
       this.authService.login();
-      this.router.navigate(['system']);
+      this.router.navigate(['system/home']);
     } else {
       this.message.text = 'Не удалось выполнить вход';
     }
