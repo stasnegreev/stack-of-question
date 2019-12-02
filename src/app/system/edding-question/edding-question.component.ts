@@ -15,7 +15,7 @@ export class EddingQuestionComponent implements OnInit {
 
   form: FormGroup;
   questionId: any;
-  question: Question
+  question: Question;
 
   constructor(
     private questionService: QuestionService,
@@ -31,13 +31,13 @@ export class EddingQuestionComponent implements OnInit {
     this.questionService.getQuestionById(this.questionId.value)
       .subscribe((question: Question) => {
         this.question = question;
-        console.log('question to edit=', this.question);
+        console.log('EddingQuestionComponent question to edit on init=', this.question);
         this.form.patchValue({
           'title': this.question.title,
           'text': this.question.text,
           'tags': {
-            'tag1': true,
-            'tag2': false,
+            'tag1': this.question.tags.indexOf('tag1') + 1,
+            'tag2': this.question.tags.indexOf('tag2') + 1,
           }
         });
       });
@@ -59,14 +59,21 @@ export class EddingQuestionComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('EddingQuestionComponent this.form.value update=', this.form.value);
     const {title, text, tags} = this.form.value;
     this.question.title = title;
     this.question.text = text;
-    this.question.tags = tags;
-    console.log('this.form.value=', this.form.value);
-    console.log('this.question=', this.question);
+    const arrTags = [];
+    for (const key in tags) {
+      if (tags[key]) {
+        arrTags.push(`${key}`);
+      }
+    }
+    console.log('EddingQuestionComponent arrTags update=', arrTags);
+    this.question.tags = arrTags;
+    console.log('EddingQuestionComponent this.question update=', this.question);
     this.questionService.updateQuestion(this.questionId.value, this.question);
-    this.router.navigate(['/system/home']);
+    //this.router.navigate(['/system/home']);
   }
 
   forbiddenTitle(control: FormControl): Promise<any> {

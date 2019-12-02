@@ -22,7 +22,7 @@ export class HomeFilterComponent implements OnInit {
       }),
       'status': new FormGroup({
         'answered': new FormControl(''),
-        'noAnswered': new FormControl(''),
+        'notApproved': new FormControl(''),
       }),
       'dateFrom': new FormControl(''),
       'dateTo': new FormControl(''),
@@ -34,10 +34,26 @@ export class HomeFilterComponent implements OnInit {
     this.onFilterCancel.emit();
   }
   apllyFilter() {
-    const filterParams = this.form.value;
-    filterParams.tags = Object.keys(filterParams.tags);
-    filterParams.status = Object.keys(filterParams.status);
-    console.log(filterParams);
+    const filterParams = {
+      tags: [],
+      status: [],
+      dateFrom: '',
+      dateTo: '',
+    };
+    console.log('this.form.value11', this.form.value);
+    for (let key in this.form.value.tags) {
+      if (this.form.value.tags[key] === true) {
+           filterParams.tags.push(key);
+      }
+    }
+    for (let key in this.form.value.status) {
+      if (this.form.value.status[key] === true) {
+        filterParams.status.push(key);
+      }
+    }
+    filterParams.dateFrom = this.form.value.dateFrom;
+    filterParams.dateTo = this.form.value.dateTo;
+    console.log('filterParams11', filterParams);
     this.onFilterApply.emit(filterParams);
   }
 }

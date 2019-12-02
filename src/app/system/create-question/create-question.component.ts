@@ -48,7 +48,13 @@ export class CreateQuestionComponent implements OnInit {
   }
   onSubmit() {
     const {title, text, tags} = this.form.value;
-    this.questionNew = new QuestionNew(this.userService.getUserId().uid, ((new Date()) + ''), 'notApproved', tags, text, title);
+    const arrTags = [];
+    for (const key in tags) {
+      if (tags[key] === true) {
+        arrTags.push(`${key}`);
+      }
+    }
+    this.questionNew = new QuestionNew(this.userService.getUserId().uid, ((new Date()) + ''), 'notApproved', arrTags, text, title);
     console.log('push to db: ', this.questionNew);
     this.questionService.addQuestion(this.questionNew);
     this.router.navigate(['/system/home']);

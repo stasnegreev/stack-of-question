@@ -3,10 +3,7 @@ export class QuestionNew {
     public author: string,
     public date: string,
     public status: string,
-    public tags: {
-      tag1?: boolean;
-      tag2?: boolean;
-    },
+    public tags: string [],
     public text: string,
     public title: string,
   ) {}

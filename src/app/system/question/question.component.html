@@ -26,6 +26,11 @@
               <button
                 type="button"
                 class="btn btn-outline-dark"
+                (click)="addComment()"
+              >Add comment</button>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
               >Edit</button>
               <button type="button" class="btn btn-outline-dark">Delete</button>
             </div>
@@ -33,5 +38,33 @@
       </div>
 
     </div>
+  </div>
+  <div class="container comments">
+    <ul class="">
+      <li
+        class="comment comments-item"
+        *ngFor="let comment of comments"
+      >
+        <div class="comment__user">
+          {{comment.author}}
+        </div>
+        <div class="comment__text">
+          {{comment.text}}
+        </div>
+        <div class="comment__info">
+          <div class="comment__date">
+            {{comment.date | date:"M.d.yy"}}
+          </div>
+          <div class="comment__resolve">
+            <input
+              type="checkbox"
+              class="comment__checkbox"
+              value="resolve"
+            >
+            <label class="comment__checkbox-lable " >resolve</label>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </section>

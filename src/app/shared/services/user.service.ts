@@ -28,7 +28,7 @@ export class UserService {
     return this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider());
   }
   getUserId() {
-    return this.afAuth.auth.currentUser
+    return this.afAuth.auth.currentUser;
   }
 
 }

@@ -44,19 +44,23 @@
       <ul class="questions__list questions__list-line">
         <li
           class="questions__item"
-          *ngFor="let q of questions"
+          *ngFor="let question of filteredQuestion"
         >
-          <div class="question question-line">
-            <h3 class="question__title">{{q.title}}</h3>
+          <div
+            class="question question-line"
+            [routerLink]="['/system/question']"
+            [fragment]="(question.key)"
+          >
+            <h3 class="question__title">{{question.title}}</h3>
             <div class="question__info">
               <div class="question__date">
-                {{q.date | date:"M.d.yy"}}
+                {{question.date | date:"M.d.yy"}}
               </div>
               <div class="question__tags">
                 <span
-                  *ngFor="let t of q.tags"
+                  *ngFor="let tag of question.tags"
                   class="question__tag"
-                >{{t}}</span>
+                >{{tag}}</span>
               </div>
             </div>
             <div class="question__control">
@@ -65,7 +69,7 @@
                   type="button"
                   class="btn btn-outline-dark"
                   [routerLink]="['/system/eddingQuestion']"
-                  [fragment]="(q.key)"
+                  [fragment]="(question.key)"
                 >Edit</button>
                 <button type="button" class="btn btn-outline-dark">Delete</button>
               </div>
