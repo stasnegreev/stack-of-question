@@ -73,7 +73,7 @@
     display: inline;
     padding-left: 15px;
   }
-  .comment:last-child{
+  &:last-child{
     margin-bottom: 0;
   }
 }

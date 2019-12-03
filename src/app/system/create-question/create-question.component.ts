@@ -18,7 +18,6 @@ import {Router} from "@angular/router";
 export class CreateQuestionComponent implements OnInit {
 
   form: FormGroup;
-  questionNew: QuestionNew;
   questions: Question;
 
   constructor(
@@ -54,9 +53,9 @@ export class CreateQuestionComponent implements OnInit {
         arrTags.push(`${key}`);
       }
     }
-    this.questionNew = new QuestionNew(this.userService.getUserId().uid, ((new Date()) + ''), 'notApproved', arrTags, text, title);
-    console.log('push to db: ', this.questionNew);
-    this.questionService.addQuestion(this.questionNew);
+    const questionNew = new QuestionNew(this.userService.getUserId().uid, ((new Date()) + ''), 'notApproved', arrTags, text, title);
+    console.log('push to db: ', questionNew);
+    this.questionService.addQuestion(questionNew);
     this.router.navigate(['/system/home']);
   }
 

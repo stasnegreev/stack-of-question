@@ -5,6 +5,7 @@ import {AngularFireDatabase} from '@angular/fire/database';
 import {UserService} from '../../shared/services/user.service';
 import {Question} from '../shared/models/question.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, Subject} from "rxjs";
 
 @Component({
   selector: 'soq-edding-question',
@@ -14,7 +15,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class EddingQuestionComponent implements OnInit {
 
   form: FormGroup;
-  questionId: any;
+  questionId: string;
   question: Question;
 
   constructor(
@@ -26,9 +27,9 @@ export class EddingQuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.questionId = this.route.fragment;
-    console.log('questionId=', this.questionId.value);
-    this.questionService.getQuestionById(this.questionId.value)
+    this.questionId = this.route.snapshot.fragment;
+    console.log('questionId=', this.questionId);
+    this.questionService.getQuestionById(this.questionId)
       .subscribe((question: Question) => {
         this.question = question;
         console.log('EddingQuestionComponent question to edit on init=', this.question);
@@ -72,8 +73,8 @@ export class EddingQuestionComponent implements OnInit {
     console.log('EddingQuestionComponent arrTags update=', arrTags);
     this.question.tags = arrTags;
     console.log('EddingQuestionComponent this.question update=', this.question);
-    this.questionService.updateQuestion(this.questionId.value, this.question);
-    //this.router.navigate(['/system/home']);
+    this.questionService.updateQuestion(this.questionId, this.question);
+    this.router.navigate(['/system/home']);
   }
 
   forbiddenTitle(control: FormControl): Promise<any> {
