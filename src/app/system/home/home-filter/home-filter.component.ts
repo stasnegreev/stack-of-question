@@ -24,8 +24,8 @@ export class HomeFilterComponent implements OnInit {
         'answered': new FormControl(''),
         'notApproved': new FormControl(''),
       }),
-      'dateFrom': new FormControl(''),
-      'dateTo': new FormControl(''),
+      'dateFrom': new FormControl(0),
+      'dateTo': new FormControl((new Date(+new Date() + 99999999))),
     });
     console.log('form.value', this.form.value);
   }

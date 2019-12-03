@@ -14,8 +14,8 @@ export class HomeComponent implements OnInit {
   data = [];
   isFilterOpen = false;
   fiterParams = {
-    dateFrom: "2019-11-01",
-    dateTo: "2019-12-01",
+    dateFrom: 0,
+    dateTo: new Date(+new Date() + 99999999),
     status: ["answered", "notApproved"],
     tags: ["tag1", "tag2"],
   };
@@ -27,22 +27,7 @@ export class HomeComponent implements OnInit {
     this.questionService.getAllUserQuestion()
       .subscribe((questions: Question[]) => {
         this.questions = questions;
-        this.filteredQuestion = this.questions.filter((question) => {
-          if (this.fiterParams.status.indexOf(question.status) + 1) {
-            console.log('status true');
-            return true;
-          }
-        });
-        this.filteredQuestion = this.filteredQuestion.filter((question) => {
-          if (!question.tags) {
-            return false;
-          }
-          return this.fiterParams.tags.some((tag) => {
-            return question.tags.indexOf(tag) + 1;
-          });
-        });
-        console.log('questions=', this.questions);
-        console.log('fiterParams=', this.fiterParams);
+        this.onFilterApply(this.fiterParams);
       });
   }
 
@@ -52,29 +37,27 @@ export class HomeComponent implements OnInit {
   onFilterCancel() {
     this.isFilterOpen = false;
   }
-  onFilterApply(fiterParams: any) {
-    this.fiterParams = fiterParams;
-    console.log('fiterParams from filter form', fiterParams)
+  onFilterApply(filterParams: any) {
+    this.fiterParams = filterParams;
+    const dateFrom = +(new Date(filterParams.dateFrom));
+    const dateTo = +(new Date(filterParams.dateTo));
+    const status = filterParams.status
+    const tags = filterParams.tags;
+    console.log('onFilterApply with next filterParams=', 'dateFrom', dateFrom, 'dateTo',  dateTo, 'status', status, 'tags', tags);
     this.filteredQuestion = this.questions.filter((question) => {
-      console.log('this.fiterParams.status=', this.fiterParams.status, 'question.status=', question.status, '1', this.fiterParams.status.indexOf(question.status));
-      if (this.fiterParams.status.indexOf(question.status) + 1) {
+      if (status.indexOf(question.status) + 1) {
         console.log('status true');
-        return true;
+        if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo) {
+          console.log('date true');
+          if (!question.tags) {
+            return false;
+            console.log('tags false');
+          }
+          return tags.some((tag) => {
+            return question.tags.indexOf(tag) + 1;
+          });
+        }
       }
-    });
-    this.filteredQuestion = this.filteredQuestion.filter((question) => {
-      if (+new Date(question.date) > +(new Date(this.fiterParams.dateFrom)) && +new Date(question.date) < +(new Date(this.fiterParams.dateTo))) {
-        console.log('date true');
-        return true;
-      }
-    });
-    this.filteredQuestion = this.filteredQuestion.filter((question) => {
-      if (!question.tags) {
-        return false;
-      }
-      return this.fiterParams.tags.some((tag) => {
-        return question.tags.indexOf(tag) + 1;
-      });
     });
   }
 }
