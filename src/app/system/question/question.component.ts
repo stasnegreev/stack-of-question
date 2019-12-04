@@ -23,21 +23,17 @@ export class QuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.fragment.
-      subscribe( (data) => {
-        console.log('route.fragment data)', data);
-        this.questionId = data;
-        this.questionService.getQuestionById(this.questionId)
-          .subscribe((question: Question) => {
-            this.question = question;
-            console.log('question=', this.question);
-          });
-        this.questionService.getComments(this.questionId)
-          .subscribe((d: any) => {
-            this.comments = d;
-            console.log('comments=', this.comments);
-          });
-    });
+    this.questionId = this.route.snapshot.fragment;
+    this.questionService.getQuestionById(this.questionId)
+      .subscribe((question: Question) => {
+        this.question = question;
+        console.log('question=', this.question);
+      });
+    this.questionService.getComments(this.questionId)
+      .subscribe((d: any) => {
+        this.comments = d;
+        console.log('comments=', this.comments);
+      });
   }
 
   addComment() {

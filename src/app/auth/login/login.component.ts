@@ -44,7 +44,10 @@ export class LoginComponent implements OnInit {
         console.log('signInByEmail result=', result);
         this.login(result);
       },
-      (error) => console.log('promise error=', error)
+      (error) => {
+        this.message.showMessage('danger', 'This email is no exist');
+        console.log('promise error=', error);
+      }
     );
 
   }

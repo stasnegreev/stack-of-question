@@ -17,12 +17,13 @@ export class HomeFilterComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       'tags': new FormGroup({
-        'tag1': new FormControl(''),
-        'tag2': new FormControl(''),
+        'tag1': new FormControl(true),
+        'tag2': new FormControl(true),
+        'noTags': new FormControl(true),
       }),
       'status': new FormGroup({
-        'answered': new FormControl(''),
-        'notApproved': new FormControl(''),
+        'answered': new FormControl(true),
+        'notApproved': new FormControl(true),
       }),
       'dateFrom': new FormControl(0),
       'dateTo': new FormControl((new Date(+new Date() + 99999999))),

@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
     console.log('router=', this.router.routerState.snapshot);
     this.isLogin = this.authService.isLoggedIn();
     this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd){
+      if (event instanceof NavigationEnd) {
         console.log('Navigation End');
         this.curentUrl = this.router.routerState.snapshot.url;
         console.log('router=', this.router.routerState.snapshot.url);

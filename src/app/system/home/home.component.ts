@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
     dateFrom: 0,
     dateTo: new Date(+new Date() + 99999999),
     status: ["answered", "notApproved"],
-    tags: ["tag1", "tag2"],
+    tags: ["tag1", "tag2","noTags"],
   };
   constructor(
     private questionService: QuestionService,
@@ -50,8 +50,8 @@ export class HomeComponent implements OnInit {
         if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo) {
           console.log('date true');
           if (!question.tags) {
-            return false;
-            console.log('tags false');
+            return tags.indexOf('noTags') + 1;
+
           }
           return tags.some((tag) => {
             return question.tags.indexOf(tag) + 1;
@@ -59,5 +59,6 @@ export class HomeComponent implements OnInit {
         }
       }
     });
+    this.onFilterCancel();
   }
 }

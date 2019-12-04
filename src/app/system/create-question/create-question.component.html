@@ -35,6 +35,12 @@
             formControlName="text"
           >
           </textarea>
+          <span
+            class="formQuestion__hint"
+            *ngIf="form.get('text').invalid && form.get('text').touched"
+          >
+            <span class="form-text text-muted" *ngIf="form.get('text')['errors']['required']">Text is required</span>
+          </span>
         </div>
         <div
           class="formQuestion__item form-group"
