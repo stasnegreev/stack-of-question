@@ -3,23 +3,26 @@
     <div class="question__header ">
       <div class="question_row">
         <div class="question__author">
-          Author
+          {{question.author}}
         </div>
         <div class="question__date">
-          10 1 2012
+          {{question.date | date:"M.d.yy"}}
         </div>
       </div>
       <div class="question__title">
-        Title
+        {{question.title}}
       </div>
     </div>
     <div class="question__content">
       <div class="question__text">
-        TExsklgbdsfnkl;jbnfdkl'bj;fdkl.bndfl;kbndfl;kbjl;kdfmblkdf
+        {{question.text}}
       </div>
       <div class="question_row">
         <div class="question__tags">
-          TAg
+          <span
+            *ngFor="let tag of question.tags"
+            class="question__tag"
+          >{{tag}}</span>
         </div>
         <div class="question__control">
             <div class="btn-group question__buttons" role="group" aria-label="Basic example">

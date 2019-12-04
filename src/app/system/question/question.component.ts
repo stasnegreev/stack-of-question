@@ -27,7 +27,8 @@ export class QuestionComponent implements OnInit {
     this.questionService.getQuestionById(this.questionId)
       .subscribe((question: Question) => {
         this.question = question;
-        console.log('question=', this.question);
+        console.log('QuestionComponent OnInit question=', this.question);
+
       });
     this.questionService.getComments(this.questionId)
       .subscribe((d: any) => {

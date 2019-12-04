@@ -76,6 +76,14 @@
   &:last-child{
     margin-bottom: 0;
   }
+  .question__tag{
+    padding: 0 5px;
+    border-right: 2px darkslategrey solid;
+  }
+  .question__tag:last-child{
+    border-right: none;
+    padding-right: 0;
+  }
 }
 
 

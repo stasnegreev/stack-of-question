@@ -54,6 +54,9 @@ export class QuestionService {
       })
     );
   }
+  getUserNameByUserId(userId: string) {
+    
+  }
 
 }
 
