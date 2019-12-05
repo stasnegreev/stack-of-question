@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {QuestionService} from '../shared/services/question.service';
 import {Question} from '../shared/models/question.model';
 import {forEachComment} from "tslint";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'soq-home',
@@ -22,10 +23,11 @@ export class HomeComponent implements OnInit {
   };
   constructor(
     private questionService: QuestionService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
-    this.questionService.getAllUserQuestion()
+    this.questionService.getAllUserQuestions()
       .subscribe((questions: Question[]) => {
         this.questions = questions;
         this.onFilterApply(this.fiterParams);

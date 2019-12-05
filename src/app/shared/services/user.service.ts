@@ -13,12 +13,11 @@ import {UserData} from "../module/userData.model";
 
 export class UserService {
 
-  users: any;
-
   constructor(
    public afAuth: AngularFireAuth,
    public db: AngularFireDatabase,
   ) {}
+
   signInByEmail(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
@@ -33,9 +32,13 @@ export class UserService {
     return this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider());
   }
   getUserId() {
-    return this.afAuth.auth.currentUser;
+    return this.afAuth.auth.currentUser.uid;
   }
+
   addUserToBd(key: string, userData: UserData) {
     return this.db.object('/users/' + key).set(userData);
+  }
+  getUserData(key: string): Observable<any> {
+    return this.db.object('/users/' + key).valueChanges();
   }
 }

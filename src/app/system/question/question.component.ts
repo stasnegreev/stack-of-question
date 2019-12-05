@@ -39,7 +39,7 @@ export class QuestionComponent implements OnInit {
 
   addComment() {
     console.log('this.questionId', this.questionId);
-    const user: string = this.userService.getUserId().uid + '';
+    const user: string = this.userService.getUserId() + '';
     console.log('', user);
     this.newComment = new CommentNew('kjcvkljdfblkjdfbk', user, 'new', ((new Date()) + ''));
     this.questionService.addComment(this.questionId, this.newComment).then(r => console.log('addeded comment'));

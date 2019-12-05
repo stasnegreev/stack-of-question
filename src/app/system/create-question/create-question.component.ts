@@ -53,7 +53,7 @@ export class CreateQuestionComponent implements OnInit {
         arrTags.push(`${key}`);
       }
     }
-    const questionNew = new QuestionNew(this.userService.getUserId().uid, ((new Date()) + ''), 'notApproved', arrTags, text, title);
+    const questionNew = new QuestionNew(this.userService.getUserId(), ((new Date()) + ''), 'notApproved', arrTags, text, title);
     console.log('push to db: ', questionNew);
     this.questionService.addQuestion(questionNew);
     this.router.navigate(['/system/home']);

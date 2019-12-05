@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     this.usersServise.signInByEmail(email, password).then(
       (result) => {
         console.log('signInByEmail result=', result);
-        this.login(result);
+        this.login();
       },
       (error) => {
         this.message.showMessage('danger', 'This email is no exist');
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
             return;
           }
         );
-        this.login(result);
+        this.login();
       },
       (error) => console.log('promise error=', error)
     );
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
     this.usersServise.createNewUserByFacebook().then(
       (result) => {
         console.log('promise result=', result);
-        this.login(result);
+        this.login();
       },
       (error) => {
         console.log('promise error=', error);
@@ -96,9 +96,13 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  login(result) {
-    this.authService.login();
-    this.router.navigate(['system/home']);
+  login() {
+    const uId = this.usersServise.getUserId();
+    this.usersServise.getUserData(uId)
+      .subscribe((userData: UserData) => {
+        this.authService.login(uId, userData);
+        this.router.navigate(['system/home']);
+      });
   }
 }
 
