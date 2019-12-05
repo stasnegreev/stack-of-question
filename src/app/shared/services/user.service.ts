@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {User} from '../module/user.model';
 import {auth} from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireDatabase} from "@angular/fire/database";
+import {UserData} from "../module/userData.model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +13,17 @@ import {AngularFireAuth} from '@angular/fire/auth';
 
 export class UserService {
 
- constructor(
+  users: any;
+
+  constructor(
    public afAuth: AngularFireAuth,
- ) {}
-  user: User;
+   public db: AngularFireDatabase,
+  ) {}
   signInByEmail(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
   createNewUserByEmail(user: User) {
+    console.log('reateNewUserByEmail user.email=', user.email);
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
   createNewUserByGoogle() {
@@ -30,5 +35,7 @@ export class UserService {
   getUserId() {
     return this.afAuth.auth.currentUser;
   }
-
+  addUserToBd(key: string, userData: UserData) {
+    return this.db.object('/users/' + key).set(userData);
+  }
 }

@@ -8,6 +8,7 @@ import {Message} from '../../shared/module/message.model';
 import {Observable} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {auth} from 'firebase';
+import {UserData} from "../../shared/module/userData.model";
 
 @Component({
   selector: 'soq-registration',
@@ -19,7 +20,7 @@ export class RegistrationComponent implements OnInit {
 
   regForm: FormGroup;
   message: Message;
-
+  user: User;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -38,8 +39,35 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     console.log('this.regForm.value=', this.regForm.value);
-    const {email, password, name} = this.regForm.value;
-    const user = new User(email, password, name);
-    this.userService.createNewUserByEmail(user);
+    const {email, password} = this.regForm.value;
+    console.log('email=', email, 'password', password);
+    const user = new User(email, password);
+    console.log('user=', user);
+    this.userService.createNewUserByEmail(user).then(
+      (result) => {
+        console.log('signUpByEmail promise result=', result);
+        const userData = new UserData(result.user.email, 'admin');
+        const key = result.user.uid;
+        this.userService.addUserToBd(key, userData).then(
+          () => {
+            return;
+          },
+          (error) => {
+            this.message.showMessage('danger', 'Error of registration');
+            console.log('signUpByEmail promise error=', error);
+            return;
+          }
+        );
+        this.router.navigate(['/login'], {
+          queryParams: {
+            nowCanLogin: true
+          }
+        });
+      },
+      (error) => {
+        this.message.showMessage('danger', 'Error of registration');
+        console.log('signUpByEmail promise error=', error);
+      }
+    );
   }
 }

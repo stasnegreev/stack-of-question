@@ -3,11 +3,12 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Message} from '../../shared/module/message.model';
 import {AuthService} from '../../shared/services/auth.service';
 import {Title} from '@angular/platform-browser';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {UserService} from '../../shared/services/user.service';
 import {User} from '../../shared/module/user.model';
 import {auth} from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
+import {UserData} from "../../shared/module/userData.model";
 
 @Component({
   selector: 'soq-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
     private usersServise: UserService,
     private title: Title,
     private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -34,6 +36,12 @@ export class LoginComponent implements OnInit {
         'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
       }
     );
+    this.route.queryParams
+      .subscribe((params: Params) => {
+        if (params[`nowCanLogin`]) {
+          this.message.showMessage('success', 'Now you can LogIn');
+        }
+      });
   }
 
   onSubmit() {
@@ -56,6 +64,19 @@ export class LoginComponent implements OnInit {
     this.usersServise.createNewUserByGoogle().then(
       (result) => {
         console.log('onRegGoogle result=', result);
+        const userData = new UserData(result.user.email, 'user');
+        const key = result.user.uid;
+        this.usersServise.addUserToBd(key, userData).then(
+          () => {
+            console.log('signUpByEmail addUserToBdr=');
+            return;
+          },
+          (error) => {
+            this.message.showMessage('danger', 'Error of registration');
+            console.log('signUpByEmail promise error=', error);
+            return;
+          }
+        );
         this.login(result);
       },
       (error) => console.log('promise error=', error)
@@ -76,16 +97,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(result) {
-    if (result.user.emailVerified) {
-      console.log('user.emailVerified');
-      //let user: User;
-      //user.email = result.user.email;
-      console.log('result.user.email=', result.user.email);
-      this.authService.login();
-      this.router.navigate(['system/home']);
-    } else {
-      this.message.text = 'Не удалось выполнить вход';
-    }
+    this.authService.login();
+    this.router.navigate(['system/home']);
   }
 }
 
