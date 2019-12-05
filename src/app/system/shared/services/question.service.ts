@@ -28,7 +28,8 @@ export class QuestionService {
   updateQuestion(key: string, question: Question) {
     this.db.object('/questions/' + key).update(question);
   }
-  getAllUserQuestions() {
+
+  getAllQuestions() {
     return this.questions.snapshotChanges().pipe(
       map((changes: []) => {
         return changes.map((c: any) => {

@@ -64,11 +64,13 @@ export class LoginComponent implements OnInit {
     this.usersServise.createNewUserByGoogle().then(
       (result) => {
         console.log('onRegGoogle result=', result);
-        const userData = new UserData(result.user.email, 'user');
+        const uId = this.usersServise.getUserId();
+        const userData = new UserData(result.user.email, 'user', uId);
         const key = result.user.uid;
         this.usersServise.addUserToBd(key, userData).then(
           () => {
             console.log('signUpByEmail addUserToBdr=');
+            this.login();
             return;
           },
           (error) => {
@@ -77,7 +79,6 @@ export class LoginComponent implements OnInit {
             return;
           }
         );
-        this.login();
       },
       (error) => console.log('promise error=', error)
     );
@@ -100,7 +101,9 @@ export class LoginComponent implements OnInit {
     const uId = this.usersServise.getUserId();
     this.usersServise.getUserData(uId)
       .subscribe((userData: UserData) => {
-        this.authService.login(uId, userData);
+
+        window.localStorage.setItem('user', JSON.stringify(userData));
+        this.authService.login();
         this.router.navigate(['system/home']);
       });
   }

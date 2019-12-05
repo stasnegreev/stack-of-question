@@ -4,6 +4,8 @@ import {QuestionService} from "../shared/services/question.service";
 import {UserService} from "../../shared/services/user.service";
 import {Question} from "../shared/models/question.model";
 import {CommentNew} from "../shared/models/commentNew.model";
+import {UserData} from "../../shared/module/userData.model";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'soq-question',
@@ -16,6 +18,9 @@ export class QuestionComponent implements OnInit {
   question: Question;
   comments: any;
   newComment: CommentNew;
+  userData: UserData;
+  isLoaded = false;
+
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
@@ -27,21 +32,33 @@ export class QuestionComponent implements OnInit {
     this.questionService.getQuestionById(this.questionId)
       .subscribe((question: Question) => {
         this.question = question;
+        console.log('QuestionComponent ngOnInit question=', question);
+        this.userService.getUserData(question.author)
+          .subscribe((data: UserData) => {
+            this.userData = data;
+            console.log('QuestionComponent ngOnInit this.userData=', this.userData );
+            this.isLoaded = true;
+        });
         console.log('QuestionComponent OnInit question=', this.question);
 
       });
     this.questionService.getComments(this.questionId)
       .subscribe((d: any) => {
         this.comments = d;
+        this.comments.map((i) => {
+          this.userService.getUserData(i.author)
+            .subscribe((data: UserData) => i.author = data.name);
+        })
         console.log('comments=', this.comments);
       });
+
   }
 
-  addComment() {
-    console.log('this.questionId', this.questionId);
+  addComment(form: NgForm) {
+    console.log('QuestionComponent addComment form', form);
     const user: string = this.userService.getUserId() + '';
-    console.log('', user);
-    this.newComment = new CommentNew('kjcvkljdfblkjdfbk', user, 'new', ((new Date()) + ''));
+    this.newComment = new CommentNew(form.value.text, this.userData.id, 'notApproved', ((new Date()) + ''));
+    console.log('QuestionComponent addComment this.newComment', this.newComment);
     this.questionService.addComment(this.questionId, this.newComment).then(r => console.log('addeded comment'));
   }
 

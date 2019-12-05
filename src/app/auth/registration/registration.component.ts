@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit {
   message: Message;
   user: User;
   constructor(
-    private userService: UserService,
+    private usersServise: UserService,
     private router: Router,
     private title: Title,
   ) { }
@@ -43,17 +43,18 @@ export class RegistrationComponent implements OnInit {
     console.log('email=', email, 'password', password);
     const user = new User(email, password);
     console.log('user=', user);
-    this.userService.createNewUserByEmail(user).then(
-      (result) => {
+    this.usersServise.createNewUserByEmail(user)
+      .then((result) => {
         console.log('signUpByEmail promise result=', result);
-        const userData = new UserData(result.user.email, 'admin');
+        const uId = this.usersServise.getUserId();
+        const userData = new UserData(result.user.email, 'user', uId);
         const key = result.user.uid;
-        this.userService.addUserToBd(key, userData).then(
+        this.usersServise.addUserToBd(key, userData).then(
           () => {
             return;
           },
           (error) => {
-            this.message.showMessage('danger', 'Error of registration');
+            this.message.showMessage('danger', error.message);
             console.log('signUpByEmail promise error=', error);
             return;
           }
@@ -65,7 +66,8 @@ export class RegistrationComponent implements OnInit {
         });
       },
       (error) => {
-        this.message.showMessage('danger', 'Error of registration');
+        console.log('createNewUserByEmail error');
+        this.message.showMessage('danger', error.message);
         console.log('signUpByEmail promise error=', error);
       }
     );

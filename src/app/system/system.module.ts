@@ -6,10 +6,11 @@ import { SystemComponent } from './system.component';
 import { HomeComponent } from './home/home.component';
 import { CreateQuestionComponent } from './create-question/create-question.component';
 import { QuestionComponent } from './question/question.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EddingQuestionComponent } from './edding-question/edding-question.component';
 import { HomeFilterComponent } from './home/home-filter/home-filter.component';
 import { FilterByDatePipe } from './shared/pipes/filter-by-date.pipe';
+import { UserNamePipe } from './shared/pipes/user-name.pipe';
 
 
 @NgModule({
@@ -21,11 +22,13 @@ import { FilterByDatePipe } from './shared/pipes/filter-by-date.pipe';
     EddingQuestionComponent,
     HomeFilterComponent,
     FilterByDatePipe,
+    UserNamePipe,
   ],
   imports: [
     CommonModule,
     SystemRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class SystemModule { }

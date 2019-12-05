@@ -30,6 +30,20 @@
     padding: 10px 0;
   }
 }
+.commentForm{
+  border: 2px darkslategrey solid;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  .formQuestion__button{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+}
 .comments {
   display: flex;
   flex-direction: column;

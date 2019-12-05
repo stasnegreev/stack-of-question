@@ -1,9 +1,9 @@
-<section>
+<section *ngIf="isLoaded">
   <div class="container question">
     <div class="question__header ">
       <div class="question_row">
         <div class="question__author">
-          {{question.author}}
+          {{userData.name.slice(0,userData.name.indexOf('@'))}}
         </div>
         <div class="question__date">
           {{question.date | date:"M.d.yy"}}
@@ -29,11 +29,6 @@
               <button
                 type="button"
                 class="btn btn-outline-dark"
-                (click)="addComment()"
-              >Add comment</button>
-              <button
-                type="button"
-                class="btn btn-outline-dark"
                 [routerLink]="['/system/eddingQuestion']"
                 [fragment]="(questionId)"
               >Edit</button>
@@ -44,14 +39,52 @@
 
     </div>
   </div>
+  <div class="container commentForm">
+    <form
+      class="formQuestion"
+      #f="ngForm"
+      (ngSubmit)="addComment(f)"
+    >
+      <div class="formQuestion__item form-group">
+        <label class="formQuestion__lable">
+          Text
+        </label>
+        <textarea
+          class="formQuestion__input formQuestion__textarea form-control"
+          ngModel
+          required
+          type="text"
+          #text="ngModel"
+          name="text"
+          id="text"
+        >
+        </textarea>
+      </div>
+      <div class="formQuestion__button form-group">
+        <button
+          type="submit"
+          class="btn btn btn-outline-dark"
+          [disabled]="f.invalid"
+        >
+          Add comment</button>
+      </div>
+
+    </form>
+  </div>
   <div class="container comments">
+    <span
+      class="comments__info"
+      *ngIf="!comments.length"
+    >
+      No any comments yet
+    </span>
     <ul class="">
       <li
         class="comment comments-item"
         *ngFor="let comment of comments"
       >
         <div class="comment__user">
-          {{comment.author}}
+          {{comment.author | soqUserName}}
         </div>
         <div class="comment__text">
           {{comment.text}}

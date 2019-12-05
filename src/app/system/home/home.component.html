@@ -24,7 +24,10 @@
   (onFilterCancel)="onFilterCancel()"
   (onFilterApply)="onFilterApply($event)"
 ></soq-home-filter>
-<div class="questions">
+<div
+  class="questions"
+  *ngIf="isLoaded"
+>
   <div class="container">
     <div class="questions__row">
       <ul class="questions__list questions__list-line">
@@ -49,7 +52,7 @@
                 >{{tag}}</span>
               </div>
             </div>
-            <div class="question__control">
+            <div class="question__control" *ngIf="userData.status === 'admin'">
               <div class="btn-group question__buttons" role="group" aria-label="Basic example">
                 <button
                   type="button"

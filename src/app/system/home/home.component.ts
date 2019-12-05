@@ -3,6 +3,8 @@ import {QuestionService} from '../shared/services/question.service';
 import {Question} from '../shared/models/question.model';
 import {forEachComment} from "tslint";
 import {AuthService} from "../../shared/services/auth.service";
+import {UserService} from "../../shared/services/user.service";
+import {UserData} from "../../shared/module/userData.model";
 
 @Component({
   selector: 'soq-home',
@@ -10,11 +12,14 @@ import {AuthService} from "../../shared/services/auth.service";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  isLoaded = false;
+  userStatus: string;
   questions: Question[];
   filteredQuestion: Question[];
   data = [];
   isFilterOpen = false;
   isAscending = false;
+  userData: UserData;
   fiterParams = {
     dateFrom: 0,
     dateTo: new Date(+new Date() + 99999999),
@@ -24,13 +29,18 @@ export class HomeComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
     private authService: AuthService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
-    this.questionService.getAllUserQuestions()
+    this.userData = JSON.parse(window.localStorage.getItem('user'));
+    console.log('HomeComponent ngOnInit userId');
+    this.questionService.getAllQuestions()
       .subscribe((questions: Question[]) => {
+        console.log('HomeComponent ngOnInit questions', questions);
         this.questions = questions;
         this.onFilterApply(this.fiterParams);
+        this.isLoaded = true;
       });
   }
 
@@ -44,7 +54,7 @@ export class HomeComponent implements OnInit {
     this.fiterParams = filterParams;
     const dateFrom = +(new Date(filterParams.dateFrom));
     const dateTo = +(new Date(filterParams.dateTo));
-    const status = filterParams.status
+    const status = filterParams.status;
     const tags = filterParams.tags;
     console.log('onFilterApply with next filterParams=', 'dateFrom', dateFrom, 'dateTo',  dateTo, 'status', status, 'tags', tags);
     this.filteredQuestion = this.questions.filter((question) => {

@@ -8,7 +8,7 @@ import {UserData} from "../module/userData.model";
 })
 export class AuthService {
   private isAuthenticated = false;
-  public uId : string;
+  public userId: string;
   public userName: string;
   public userStaus: string;
 
@@ -16,14 +16,12 @@ export class AuthService {
     public afAuth: AngularFireAuth,
   ) {}
 
-  login(uid: string, userData: UserData) {
-    this.uId = uid;
-    this.userName = userData.name;
-    this.userStaus = userData.status;
+  login() {
     this.isAuthenticated = true;
   }
   logout() {
     this.afAuth.auth.signOut().then(() => {
+      window.localStorage.clear();
       this.isAuthenticated = false;
     }).catch((error) => {
       // An error happened.

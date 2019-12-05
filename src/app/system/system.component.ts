@@ -3,6 +3,7 @@ import {AuthService} from '../shared/services/auth.service';
 import {UserService} from '../shared/services/user.service';
 import {Title} from '@angular/platform-browser';
 import {Router} from '@angular/router';
+import {UserData} from "../shared/module/userData.model";
 
 @Component({
   selector: 'soq-system',
@@ -19,6 +20,8 @@ export class SystemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    console.log('HomeComponent ngOnInit userId');
   }
   onSignOut() {
     this.authService.logout();
