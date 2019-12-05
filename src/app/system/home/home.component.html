@@ -7,22 +7,8 @@
         </div>
       </div>
       <div class="header__button">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sort
-          </button>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-            <a
-              class="dropdown-item"
-            >
-              Descending date
-            </a>
-            <a
-              class="dropdown-item"
-            >
-              Ascending date
-            </a>
-          </div>
+        <div class="btn btn-outline-info" (click)="sortByData()">
+          Sorting by data
         </div>
       </div>
       <div class="header__button">
@@ -44,7 +30,7 @@
       <ul class="questions__list questions__list-line">
         <li
           class="questions__item"
-          *ngFor="let question of filteredQuestion"
+          *ngFor="let question of filteredQuestion | soqFilterByDate: isAscending"
         >
           <div
             class="question question-line"
@@ -52,7 +38,7 @@
             [fragment]="(question.key)"
           >
             <h3 class="question__title">{{question.title}}</h3>
-            <div class="question__info">
+            <div class="question__info">0
               <div class="question__date">
                 {{question.date | date:"M.d.yy"}}
               </div>

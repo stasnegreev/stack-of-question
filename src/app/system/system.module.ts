@@ -9,6 +9,7 @@ import { QuestionComponent } from './question/question.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { EddingQuestionComponent } from './edding-question/edding-question.component';
 import { HomeFilterComponent } from './home/home-filter/home-filter.component';
+import { FilterByDatePipe } from './shared/pipes/filter-by-date.pipe';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { HomeFilterComponent } from './home/home-filter/home-filter.component';
     QuestionComponent,
     EddingQuestionComponent,
     HomeFilterComponent,
+    FilterByDatePipe,
   ],
   imports: [
     CommonModule,

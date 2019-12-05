@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   filteredQuestion: Question[];
   data = [];
   isFilterOpen = false;
+  isAscending = false;
   fiterParams = {
     dateFrom: 0,
     dateTo: new Date(+new Date() + 99999999),
@@ -60,5 +61,11 @@ export class HomeComponent implements OnInit {
       }
     });
     this.onFilterCancel();
+  }
+  sortByData() {
+    console.log('onOortByDate this.isAscending=', this.isAscending);
+
+    this.isAscending = !this.isAscending;
+    console.log('onOortByDate this.isAscending', this.isAscending);
   }
 }
