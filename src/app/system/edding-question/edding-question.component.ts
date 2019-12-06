@@ -6,6 +6,7 @@ import {UserService} from '../../shared/services/user.service';
 import {Question} from '../shared/models/question.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, Subject} from "rxjs";
+import {UserData} from "../../shared/module/userData.model";
 
 @Component({
   selector: 'soq-edding-question',
@@ -17,6 +18,7 @@ export class EddingQuestionComponent implements OnInit {
   form: FormGroup;
   questionId: string;
   question: Question;
+
 
   constructor(
     private questionService: QuestionService,
@@ -74,7 +76,7 @@ export class EddingQuestionComponent implements OnInit {
     this.question.tags = arrTags;
     console.log('EddingQuestionComponent this.question update=', this.question);
     this.questionService.updateQuestion(this.questionId, this.question);
-    this.router.navigate(['/system/home']);
+    this.router.navigate(['/system/question'], {fragment: this.questionId});
   }
 
   forbiddenTitle(control: FormControl): Promise<any> {
@@ -96,5 +98,6 @@ export class EddingQuestionComponent implements OnInit {
         });
     });
   }
+
 
 }
