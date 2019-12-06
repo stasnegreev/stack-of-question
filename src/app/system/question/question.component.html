@@ -24,7 +24,10 @@
             class="question__tag"
           >{{tag}}</span>
         </div>
-        <div class="question__control">
+        <div
+          class="question__control"
+          *ngIf="rules.edit"
+        >
             <div class="btn-group question__buttons" role="group" aria-label="Basic example">
               <button
                 type="button"
@@ -32,7 +35,11 @@
                 [routerLink]="['/system/eddingQuestion']"
                 [fragment]="(questionId)"
               >Edit</button>
-              <button type="button" class="btn btn-outline-dark">Delete</button>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                (click)="deleteQuestion()"
+              >Delete</button>
             </div>
           </div>
       </div>
@@ -93,13 +100,20 @@
           <div class="comment__date">
             {{comment.date | date:"M.d.yy"}}
           </div>
-          <div class="comment__resolve">
+          <div
+            class="comment__resolve"
+
+          >
             <input
+              *ngIf="rules.resolveComment"
               type="checkbox"
               class="comment__checkbox"
-              value="resolve"
+              [checked]="comment.status === 'approve'"
+              value="{{comment.status}}"
+              name="{{comment.key}}"
+              (change)="onResolve($event.target.name, $event.target.value)"
             >
-            <label class="comment__checkbox-lable " >resolve</label>
+            <label class="comment__checkbox-lable " >{{comment.status}}</label>
           </div>
         </div>
       </li>

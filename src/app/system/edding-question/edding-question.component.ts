@@ -7,6 +7,7 @@ import {Question} from '../shared/models/question.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, Subject} from "rxjs";
 import {UserData} from "../../shared/module/userData.model";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'soq-edding-question',
@@ -26,6 +27,7 @@ export class EddingQuestionComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location,
   ) { }
 
   ngOnInit() {
@@ -97,6 +99,9 @@ export class EddingQuestionComponent implements OnInit {
           //have i to close this subscribtion?
         });
     });
+  }
+  goBack() {
+    this.location.back();
   }
 
 

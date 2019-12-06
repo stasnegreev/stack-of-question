@@ -74,9 +74,17 @@
           <button
             type="submit"
             class="btn btn btn-outline-dark"
+            (click)="goBack()"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn btn-outline-dark"
             [disabled]="form.invalid || !form.dirty"
           >
-            Edit question</button>
+            Edit question
+          </button>
         </div>
 
       </form>

@@ -57,8 +57,19 @@
                 <button
                   type="button"
                   class="btn btn-outline-dark"
-                >Approve</button>
-                <button type="button" class="btn btn-outline-dark">Delete</button>
+                  *ngIf="question.status === 'notApproved'"
+
+                  (click)="approveQuestion($event, question.key)"
+                >
+                  Approve
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  (click)="deleteQuestion($event, question.key)"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>

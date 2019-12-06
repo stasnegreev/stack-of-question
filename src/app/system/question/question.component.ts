@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {QuestionService} from "../shared/services/question.service";
 import {UserService} from "../../shared/services/user.service";
 import {Question} from "../shared/models/question.model";
 import {CommentNew} from "../shared/models/commentNew.model";
 import {UserData} from "../../shared/module/userData.model";
-import {NgForm} from "@angular/forms";
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 
 @Component({
   selector: 'soq-question',
@@ -25,11 +25,13 @@ export class QuestionComponent implements OnInit {
     edit: false,
     resolveComment: false,
   };
+  commentResolve: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private questionService: QuestionService,
     private userService: UserService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -58,7 +60,6 @@ export class QuestionComponent implements OnInit {
         });
         console.log('comments=', this.comments);
       });
-
   }
 
   addComment(form: NgForm) {
@@ -81,5 +82,20 @@ export class QuestionComponent implements OnInit {
         }
         console.log('QuestionComponent checkRules this.rules.edit=', this.rules);
       });
-  };
+  }
+
+  onResolve(commentKey: string, value: string) {
+    console.log('event', commentKey, value);
+    if (value === 'notApproved') {
+      this.questionService.changeCommentStatus(this.questionId, commentKey, 'approve');
+      console.log('change to approve');
+    } else {
+      this.questionService.changeCommentStatus(this.questionId, commentKey, 'notApproved');
+      console.log('change to Not approve');
+    }
+  }
+  deleteQuestion() {
+    this.questionService.deleteQuestion(this.questionId)
+      .then(() => this.router.navigate(['/system/home']));
+  }
 }

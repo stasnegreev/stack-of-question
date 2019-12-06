@@ -5,6 +5,7 @@ import {Question} from "../models/question.model";
 import {Observable} from "rxjs";
 import {map} from 'rxjs/operators';
 import {CommentNew} from "../models/commentNew.model";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class QuestionService {
   questions: any;
   items: Observable<any[]>;
   constructor(
-    public db: AngularFireDatabase
+    private db: AngularFireDatabase,
   ) {
     this.itemRef = db.object('questions');
     this.questions = db.list('questions');
@@ -27,6 +28,12 @@ export class QuestionService {
   }
   updateQuestion(key: string, question: Question) {
     this.db.object('/questions/' + key).update(question);
+  }
+
+  updateQuestionParam(key: string, param: string, value: string) {
+    const obj = {};
+    obj[param] = value;
+    this.db.object('/questions/' + key).update(obj);
   }
 
   getAllQuestions() {
@@ -42,6 +49,10 @@ export class QuestionService {
     console.log('id=', key);
     return this.db.object('/questions/' + key).valueChanges();
   }
+  deleteQuestion(key: string) {
+    return this.db.object('/questions/' + key).remove();
+
+  }
   addComment(key: string, comment: CommentNew) {
     console.log('key', key);
     return this.db.list('/comments/' + key).push(comment);
@@ -55,8 +66,8 @@ export class QuestionService {
       })
     );
   }
-  getUserNameByUserId(userId: string) {
-
+  changeCommentStatus(questionKey: string, commentKey: string, value: string) {
+    this.db.object('/comments/' + questionKey + '/' + commentKey).update({status: value});
   }
 
 }

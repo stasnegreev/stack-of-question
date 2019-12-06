@@ -23,9 +23,10 @@ export class HomeComponent implements OnInit {
   fiterParams = {
     dateFrom: 0,
     dateTo: new Date(+new Date() + 99999999),
-    status: ["answered", "notApproved"],
+    status: ["approve", "notApproved"],
     tags: ["tag1", "tag2","noTags"],
   };
+
   constructor(
     private questionService: QuestionService,
     private authService: AuthService,
@@ -59,12 +60,9 @@ export class HomeComponent implements OnInit {
     console.log('onFilterApply with next filterParams=', 'dateFrom', dateFrom, 'dateTo',  dateTo, 'status', status, 'tags', tags);
     this.filteredQuestion = this.questions.filter((question) => {
       if (status.indexOf(question.status) + 1) {
-        console.log('status true');
         if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo) {
-          console.log('date true');
           if (!question.tags) {
             return tags.indexOf('noTags') + 1;
-
           }
           return tags.some((tag) => {
             return question.tags.indexOf(tag) + 1;
@@ -80,4 +78,16 @@ export class HomeComponent implements OnInit {
     this.isAscending = !this.isAscending;
     console.log('onOortByDate this.isAscending', this.isAscending);
   }
+  deleteQuestion(event, key) {
+    console.log('key', key);
+    event.stopPropagation();
+    this.questionService.deleteQuestion(key);
+  }
+  approveQuestion(event, key) {
+    console.log('key', key);
+    event.stopPropagation();
+    this.questionService.updateQuestionParam(key, 'status', 'approve');
+  }
+
+
 }
