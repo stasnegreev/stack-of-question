@@ -13,6 +13,7 @@
             class="formQuestion"
             [formGroup]="form"
             (ngSubmit)="onSubmit()"
+
           >
             <div
               class="formQuestion__item form-group"
@@ -59,14 +60,14 @@
                 Status
               </label>
               <ul class="formQuestion__checkboxList formQuestion__input">
-                <li class="formQuestion__checkboxItem ">
+                <li class="formQuestion__checkboxItem">
                   <input
                     type="checkbox"
                     class="formQuestion__checkbox "
-                    formControlName="answered"
-                    value="answered"
+                    formControlName="approved"
+                    value="approved"
                   >
-                  <label class="formQuestion__checkbox-lable ">Answered</label>
+                  <label class="formQuestion__checkbox-lable">Approved</label>
                 </li>
                 <li class="formQuestion__checkboxItem ">
                   <input
@@ -105,19 +106,20 @@
                 type="date"
               >
             </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="closeFilter()"
+              >Отмена</button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+              >
+                Применить
+              </button>
+            </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            (click)="closeFilter()"
-          >Отмена</button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="apllyFilter()"
-          >Применить</button>
         </div>
       </div>
     </div>

@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {QuestionService} from '../shared/services/question.service';
 import {Question} from '../shared/models/question.model';
-import {forEachComment} from "tslint";
 import {AuthService} from "../../shared/services/auth.service";
 import {UserService} from "../../shared/services/user.service";
 import {UserData} from "../../shared/module/userData.model";
@@ -12,6 +11,9 @@ import {UserData} from "../../shared/module/userData.model";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  @Output() onFilterOpen = new EventEmitter<any>();
+
+
   isLoaded = false;
   userStatus: string;
   questions: Question[];
@@ -20,11 +22,11 @@ export class HomeComponent implements OnInit {
   isFilterOpen = false;
   isAscending = false;
   userData: UserData;
-  fiterParams = {
+  filterParams = {
     dateFrom: 0,
     dateTo: new Date(+new Date() + 99999999),
-    status: ["approve", "notApproved"],
-    tags: ["tag1", "tag2","noTags"],
+    status: ['approved', 'notApproved'],
+    tags: ['tag1', 'tag2', 'noTags'],
   };
 
   constructor(
@@ -40,7 +42,7 @@ export class HomeComponent implements OnInit {
       .subscribe((questions: Question[]) => {
         console.log('HomeComponent ngOnInit questions', questions);
         this.questions = questions;
-        this.onFilterApply(this.fiterParams);
+        this.onFilterApply(this.filterParams);
         this.isLoaded = true;
       });
   }
@@ -52,12 +54,28 @@ export class HomeComponent implements OnInit {
     this.isFilterOpen = false;
   }
   onFilterApply(filterParams: any) {
-    this.fiterParams = filterParams;
-    const dateFrom = +(new Date(filterParams.dateFrom));
-    const dateTo = +(new Date(filterParams.dateTo));
+    this.filterParams = filterParams;
+
+    let dateFrom: any;
+    if (!filterParams.dateFrom) {
+      console.log('this.filterParams.dateFrom', this.filterParams.dateFrom);
+      dateFrom = 0;
+    } else {
+      console.log('this.filterParams.dateFrom', this.filterParams.dateFrom);
+      dateFrom = +(new Date(filterParams.dateFrom));
+    }
+   //const dateFrom = +(new Date(filterParams.dateFrom));
+    let dateTo: any;
+    if (!filterParams.dateTo) {
+      console.log('this.filterParams.dateTo', this.filterParams.dateTo);
+      dateTo = new Date(+new Date() + 99999999);
+    } else {
+      console.log('this.filterParams.dateTo', this.filterParams.dateTo);
+      dateTo = +(new Date(filterParams.dateTo));
+    }
     const status = filterParams.status;
     const tags = filterParams.tags;
-    console.log('onFilterApply with next filterParams=', 'dateFrom', dateFrom, 'dateTo',  dateTo, 'status', status, 'tags', tags);
+    console.log('HomeComponent onFilterApply with next filterParams=', 'dateFrom', dateFrom, 'dateTo',  dateTo, 'status', status, 'tags', tags);
     this.filteredQuestion = this.questions.filter((question) => {
       if (status.indexOf(question.status) + 1) {
         if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo) {
@@ -86,7 +104,7 @@ export class HomeComponent implements OnInit {
   approveQuestion(event, key) {
     console.log('key', key);
     event.stopPropagation();
-    this.questionService.updateQuestionParam(key, 'status', 'approve');
+    this.questionService.updateQuestionParam(key, 'status', 'approved');
   }
 
 

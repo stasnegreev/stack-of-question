@@ -1,0 +1,18 @@
+.profile{
+  border: 2px darkslategrey solid;
+  border-radius: 5px;
+  padding: 15px;
+  .profile_row{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .profile__name{
+
+  }
+  .profile__status{
+
+  }
+}

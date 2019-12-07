@@ -19,11 +19,14 @@
     </div>
   </div>
 </header>
-<soq-home-filter
-  *ngIf="isFilterOpen"
-  (onFilterCancel)="onFilterCancel()"
-  (onFilterApply)="onFilterApply($event)"
-></soq-home-filter>
+<div *ngIf="isFilterOpen">
+  <soq-home-filter
+    [filterParams]="filterParams"
+    (onFilterCancel)="onFilterCancel()"
+    (onFilterApply)="onFilterApply($event)"
+  ></soq-home-filter>
+</div>
+
 <div
   class="questions"
   *ngIf="isLoaded"
@@ -41,7 +44,7 @@
             [fragment]="(question.key)"
           >
             <h3 class="question__title">{{question.title}}</h3>
-            <div class="question__info">0
+            <div class="question__info">
               <div class="question__date">
                 {{question.date | date:"M.d.yy"}}
               </div>

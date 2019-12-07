@@ -9,6 +9,7 @@ import {CreateQuestionComponent} from "./create-question/create-question.compone
 import {QuestionComponent} from "./question/question.component";
 import {EddingQuestionComponent} from './edding-question/edding-question.component';
 import {HomeFilterComponent} from './home/home-filter/home-filter.component';
+import {ProfileComponent} from "./profile/profile.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
       {path: 'createQuestion', component: CreateQuestionComponent},
       {path: 'question', component: QuestionComponent},
       {path: 'eddingQuestion', component: EddingQuestionComponent},
+      {path: 'profile', component: ProfileComponent},
     ]},
 ];
 

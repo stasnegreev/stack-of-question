@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
@@ -9,6 +9,7 @@ import {Form, FormControl, FormGroup, Validators} from '@angular/forms';
 export class HomeFilterComponent implements OnInit {
   @Output() onFilterCancel = new EventEmitter<any>();
   @Output() onFilterApply = new EventEmitter<any>();
+  @Input() filterParams: any = [];
 
   form: FormGroup;
 
@@ -22,11 +23,25 @@ export class HomeFilterComponent implements OnInit {
         'noTags': new FormControl(true),
       }),
       'status': new FormGroup({
-        'answered': new FormControl(true),
+        'approved': new FormControl(true),
         'notApproved': new FormControl(true),
       }),
       'dateFrom': new FormControl(0),
       'dateTo': new FormControl((new Date(+new Date() + 99999999))),
+    });
+    console.log('HomeFilterComponent ngOnInit ', this.filterParams)
+    this.form.patchValue({
+      'tags': {
+        'tag1': !!(this.filterParams.tags.indexOf('tag1') + 1),
+        'tag2': !!(this.filterParams.tags.indexOf('tag2') + 1),
+        'noTags': !!(this.filterParams.tags.indexOf('noTags') + 1),
+      },
+      'status': {
+        'approved': !!(this.filterParams.status.indexOf('approved') + 1),
+        'notApproved': !!(this.filterParams.status.indexOf('notApproved') + 1),
+      },
+      'dateFrom': this.filterParams.dateFrom,
+      'dateTo': this.filterParams.dateTo,
     });
     console.log('form.value', this.form.value);
   }
@@ -34,27 +49,28 @@ export class HomeFilterComponent implements OnInit {
   closeFilter() {
     this.onFilterCancel.emit();
   }
-  apllyFilter() {
+  onSubmit() {
     const filterParams = {
       tags: [],
       status: [],
       dateFrom: '',
       dateTo: '',
     };
-    console.log('this.form.value11', this.form.value);
-    for (let key in this.form.value.tags) {
+    console.log('HomeFilterComponent onSubmit this.form.value', this.form.value);
+    for (const key in this.form.value.tags) {
       if (this.form.value.tags[key] === true) {
            filterParams.tags.push(key);
       }
     }
-    for (let key in this.form.value.status) {
+    for (const key in this.form.value.status) {
       if (this.form.value.status[key] === true) {
         filterParams.status.push(key);
       }
     }
     filterParams.dateFrom = this.form.value.dateFrom;
     filterParams.dateTo = this.form.value.dateTo;
-    console.log('filterParams11', filterParams);
+
+    console.log('HomeFilterComponent onSubmit filterParams=', filterParams);
     this.onFilterApply.emit(filterParams);
   }
 }

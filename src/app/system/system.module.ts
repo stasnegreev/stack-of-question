@@ -11,6 +11,7 @@ import { EddingQuestionComponent } from './edding-question/edding-question.compo
 import { HomeFilterComponent } from './home/home-filter/home-filter.component';
 import { FilterByDatePipe } from './shared/pipes/filter-by-date.pipe';
 import { UserNamePipe } from './shared/pipes/user-name.pipe';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { UserNamePipe } from './shared/pipes/user-name.pipe';
     HomeFilterComponent,
     FilterByDatePipe,
     UserNamePipe,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
