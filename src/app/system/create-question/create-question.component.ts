@@ -48,9 +48,13 @@ export class CreateQuestionComponent implements OnInit {
   onSubmit() {
     const {title, text, tags} = this.form.value;
     const arrTags = [];
-    for (const key in tags) {
-      if (tags[key] === true) {
-        arrTags.push(`${key}`);
+    if (tags.length === 0) {
+      arrTags.push('noTags');
+    } else {
+      for (const key in tags) {
+        if (tags[key] === true) {
+          arrTags.push(`${key}`);
+        }
       }
     }
     const questionNew = new QuestionNew(this.userService.getUserId(), ((new Date()) + ''), 'notApproved', arrTags, text, title);

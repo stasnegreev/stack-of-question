@@ -20,11 +20,7 @@ export class SystemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.router.navigate(['system/home']);
+  }
 
-    console.log('HomeComponent ngOnInit userId');
-  }
-  onSignOut() {
-    this.authService.logout();
-    this.router.navigate(['login']);
-  }
 }

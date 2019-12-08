@@ -1,3 +1,8 @@
+<div class="d-flex justify-content-center" *ngIf="!isLoaded">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
 <section *ngIf="isLoaded">
   <div class="container question">
     <div class="question__header ">
@@ -108,7 +113,7 @@
               *ngIf="rules.resolveComment"
               type="checkbox"
               class="comment__checkbox"
-              [checked]="comment.status === 'approve'"
+              [checked]="comment.status === 'resolve'"
               value="{{comment.status}}"
               name="{{comment.key}}"
               (change)="onResolve($event.target.name, $event.target.value)"

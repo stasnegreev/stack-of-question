@@ -9,6 +9,7 @@ import {Observable} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {auth} from 'firebase';
 import {UserData} from "../../shared/module/userData.model";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'soq-registration',
@@ -25,6 +26,7 @@ export class RegistrationComponent implements OnInit {
     private usersServise: UserService,
     private router: Router,
     private title: Title,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -71,5 +73,51 @@ export class RegistrationComponent implements OnInit {
         console.log('signUpByEmail promise error=', error);
       }
     );
+  }
+  onRegGoogle() {
+    this.usersServise.createNewUserByGoogle().then(
+      (result) => {
+        console.log('onRegGoogle result=', result);
+        const uId = this.usersServise.getUserId();
+        const userData = new UserData(result.user.email, 'user', uId);
+        const key = result.user.uid;
+        this.usersServise.addUserToBd(key, userData).then(
+          () => {
+            console.log('signUpByEmail addUserToBdr=');
+            this.login();
+            return;
+          },
+          (error) => {
+            this.message.showMessage('danger', 'Error of registration');
+            console.log('signUpByEmail promise error=', error);
+            return;
+          }
+        );
+      },
+      (error) => console.log('promise error=', error)
+    );
+  }
+
+  onRegFacebook() {
+    this.usersServise.createNewUserByFacebook().then(
+      (result) => {
+        console.log('promise result=', result);
+        this.login();
+      },
+      (error) => {
+        console.log('promise error=', error);
+        this.message.text = error.description;
+      }
+    );
+  }
+  login() {
+    const uId = this.usersServise.getUserId();
+    this.usersServise.getUserData(uId)
+      .subscribe((userData: UserData) => {
+
+        window.localStorage.setItem('user', JSON.stringify(userData));
+        this.authService.login();
+        this.router.navigate(['system/home']);
+      });
   }
 }

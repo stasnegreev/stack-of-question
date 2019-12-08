@@ -59,29 +59,24 @@
       </button>
     </div>
 
-    <button
-      (click)="onRegGoogle()"
-      class="btn btn-block btn-outline-danger"
-    >
-      Войти с Google
-    </button>
-    <button
-      (click)="onRegFacebook()"
-      class="btn btn-block btn-outline-primary"
-    >
-      Войти с Facebook
-    </button>
-    <button
-      (click)="login('sHamf92GfsUr8SOlDhDjFqxS8Le2')"
-      class="btn btn-block btn-outline-primary"
-    >
-      login
-    </button>
-    <div class="form-group">
-      <p class="text-muted text-center">
-        Нет аккаунта? <a [routerLink]="'/registration'">Зарегистрироваться!</a>
-      </p>
-    </div>
+
 
   </form>
+  <button
+    (click)="onRegGoogle()"
+    class="btn btn-block btn-outline-danger"
+  >
+    Войти с Google
+  </button>
+  <button
+    (click)="onRegFacebook()"
+    class="btn btn-block btn-outline-primary"
+  >
+    Войти с Facebook
+  </button>
+  <div class="form-group">
+    <p class="text-muted text-center">
+      Нет аккаунта? <a [routerLink]="'/registration'">Зарегистрироваться!</a>
+    </p>
+  </div>
 </div>

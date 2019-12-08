@@ -67,7 +67,7 @@ export class QuestionService {
     );
   }
   changeCommentStatus(questionKey: string, commentKey: string, value: string) {
-    this.db.object('/comments/' + questionKey + '/' + commentKey).update({status: value});
+    return this.db.object('/comments/' + questionKey + '/' + commentKey).update({status: value});
   }
 
 }

@@ -65,7 +65,7 @@ export class QuestionComponent implements OnInit {
   addComment(form: NgForm) {
     console.log('QuestionComponent addComment form', form);
     const user: string = this.userService.getUserId() + '';
-    this.newComment = new CommentNew(form.value.text, this.userData.id, 'notApproved', ((new Date()) + ''));
+    this.newComment = new CommentNew(form.value.text, this.userData.id, 'notResolve', ((new Date()) + ''));
     console.log('QuestionComponent addComment this.newComment', this.newComment);
     this.questionService.addComment(this.questionId, this.newComment).then(r => console.log('addeded comment'));
   }
@@ -86,12 +86,26 @@ export class QuestionComponent implements OnInit {
 
   onResolve(commentKey: string, value: string) {
     console.log('event', commentKey, value);
-    if (value === 'notApproved') {
-      this.questionService.changeCommentStatus(this.questionId, commentKey, 'approve');
+    if (value === 'notResolve') {
+      this.questionService.changeCommentStatus(this.questionId, commentKey, 'resolve')
+        .then(
+          () => this.ToggleQuestionStatus()
+        );
       console.log('change to approve');
-    } else {
-      this.questionService.changeCommentStatus(this.questionId, commentKey, 'notApproved');
+    }
+    if (value === 'resolve') {
+      this.questionService.changeCommentStatus(this.questionId, commentKey, 'notResolve')
+        .then(
+          () => this.ToggleQuestionStatus()
+        );
       console.log('change to Not approve');
+    }
+  }
+  ToggleQuestionStatus() {
+    if (this.comments.find((comment) => comment.status === 'resolve')) {
+      this.questionService.updateQuestionParam(this.questionId, 'status', 'resolve');
+    } else {
+      this.questionService.updateQuestionParam(this.questionId, 'status', 'notResolve');
     }
   }
   deleteQuestion() {

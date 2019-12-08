@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 
 import { Observable } from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/database';
@@ -13,7 +13,7 @@ import {UserData} from "./shared/module/userData.model";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, DoCheck {
 
   userData: UserData;
   private curentUrl = '';
@@ -37,6 +37,10 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  ngDoCheck(): void {
+    this.userData = JSON.parse(window.localStorage.getItem('user'));
+  }
+
   onLogOut() {
     this.authService.logout();
     this.router.navigate(['login']);

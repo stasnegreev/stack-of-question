@@ -14,7 +14,12 @@ import {ProfileComponent} from "./profile/profile.component";
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const routes: Routes = [
   //{path: 'system', component: SystemComponent, canActivate: [AuthGuard]},
-  {path: 'system', component: SystemComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin}, children: [
+  {path: 'system',
+    component: SystemComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin},
+
+    children: [
       {path: 'home', component: HomeComponent},
       {path: 'createQuestion', component: CreateQuestionComponent},
       {path: 'question', component: QuestionComponent},

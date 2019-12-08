@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, DoCheck, EventEmitter, OnInit, Output} from '@angular/core';
 import {QuestionService} from '../shared/services/question.service';
 import {Question} from '../shared/models/question.model';
 import {AuthService} from "../../shared/services/auth.service";
@@ -10,7 +10,7 @@ import {UserData} from "../../shared/module/userData.model";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, DoCheck {
   @Output() onFilterOpen = new EventEmitter<any>();
 
 
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   filterParams = {
     dateFrom: 0,
     dateTo: new Date(+new Date() + 99999999),
-    status: ['approved', 'notApproved'],
+    status: ['resolve', 'notResolve'],
     tags: ['tag1', 'tag2', 'noTags'],
   };
 
@@ -46,6 +46,12 @@ export class HomeComponent implements OnInit {
         this.isLoaded = true;
       });
   }
+  ngDoCheck(): void {
+    this.userData = JSON.parse(window.localStorage.getItem('user'));
+    if (this.userData.status === 'admin') {
+      this.filterParams.status.push('notApproved');
+    }
+  }
 
   openFilter() {
     this.isFilterOpen = true;
@@ -55,7 +61,6 @@ export class HomeComponent implements OnInit {
   }
   onFilterApply(filterParams: any) {
     this.filterParams = filterParams;
-
     let dateFrom: any;
     if (!filterParams.dateFrom) {
       console.log('this.filterParams.dateFrom', this.filterParams.dateFrom);
@@ -64,7 +69,6 @@ export class HomeComponent implements OnInit {
       console.log('this.filterParams.dateFrom', this.filterParams.dateFrom);
       dateFrom = +(new Date(filterParams.dateFrom));
     }
-   //const dateFrom = +(new Date(filterParams.dateFrom));
     let dateTo: any;
     if (!filterParams.dateTo) {
       console.log('this.filterParams.dateTo', this.filterParams.dateTo);
@@ -104,7 +108,7 @@ export class HomeComponent implements OnInit {
   approveQuestion(event, key) {
     console.log('key', key);
     event.stopPropagation();
-    this.questionService.updateQuestionParam(key, 'status', 'approved');
+    this.questionService.updateQuestionParam(key, 'status', 'notResolve');
   }
 
 

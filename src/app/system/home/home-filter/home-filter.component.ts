@@ -23,8 +23,8 @@ export class HomeFilterComponent implements OnInit {
         'noTags': new FormControl(true),
       }),
       'status': new FormGroup({
-        'approved': new FormControl(true),
-        'notApproved': new FormControl(true),
+        'resolve': new FormControl(true),
+        'notResolve': new FormControl(true),
       }),
       'dateFrom': new FormControl(0),
       'dateTo': new FormControl((new Date(+new Date() + 99999999))),
@@ -37,8 +37,8 @@ export class HomeFilterComponent implements OnInit {
         'noTags': !!(this.filterParams.tags.indexOf('noTags') + 1),
       },
       'status': {
-        'approved': !!(this.filterParams.status.indexOf('approved') + 1),
-        'notApproved': !!(this.filterParams.status.indexOf('notApproved') + 1),
+        'resolve': !!(this.filterParams.status.indexOf('resolve') + 1),
+        'notResolve': !!(this.filterParams.status.indexOf('notResolve') + 1),
       },
       'dateFrom': this.filterParams.dateFrom,
       'dateTo': this.filterParams.dateTo,

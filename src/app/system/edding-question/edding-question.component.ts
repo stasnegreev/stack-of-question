@@ -19,6 +19,7 @@ export class EddingQuestionComponent implements OnInit {
   form: FormGroup;
   questionId: string;
   question: Question;
+  JSONform: string;
 
 
   constructor(
@@ -41,10 +42,11 @@ export class EddingQuestionComponent implements OnInit {
           'title': this.question.title,
           'text': this.question.text,
           'tags': {
-            'tag1': this.question.tags.indexOf('tag1') + 1,
-            'tag2': this.question.tags.indexOf('tag2') + 1,
+            'tag1': !!(this.question.tags ? this.question.tags.indexOf('tag1') + 1 : false),
+            'tag2': !!(this.question.tags ? this.question.tags.indexOf('tag2') + 1 : false),
           }
         });
+        this.JSONform = JSON.stringify(this.form.value);
       });
     this.form = new FormGroup({
       'title': new FormControl(
@@ -102,6 +104,9 @@ export class EddingQuestionComponent implements OnInit {
   }
   goBack() {
     this.location.back();
+  }
+  checkEditing() {
+    return JSON.stringify(this.form.value) === this.JSONform;
   }
 
 
