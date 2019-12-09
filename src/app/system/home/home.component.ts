@@ -13,7 +13,7 @@ import {UserData} from "../../shared/module/userData.model";
 export class HomeComponent implements OnInit, DoCheck {
   @Output() onFilterOpen = new EventEmitter<any>();
 
-
+  isListLine = false;
   isLoaded = false;
   userStatus: string;
   questions: Question[];
@@ -81,16 +81,16 @@ export class HomeComponent implements OnInit, DoCheck {
     const tags = filterParams.tags;
     console.log('HomeComponent onFilterApply with next filterParams=', 'dateFrom', dateFrom, 'dateTo',  dateTo, 'status', status, 'tags', tags);
     this.filteredQuestion = this.questions.filter((question) => {
-      if (status.indexOf(question.status) + 1) {
-        if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo) {
-          if (!question.tags) {
-            return tags.indexOf('noTags') + 1;
+        if (status.indexOf(question.status) + 1) {
+          if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo) {
+            if (!question.tags) {
+              return tags.indexOf('noTags') + 1;
+            }
+            return tags.some((tag) => {
+              return question.tags.indexOf(tag) + 1;
+            });
           }
-          return tags.some((tag) => {
-            return question.tags.indexOf(tag) + 1;
-          });
         }
-      }
     });
     this.onFilterCancel();
   }
@@ -110,6 +110,10 @@ export class HomeComponent implements OnInit, DoCheck {
     event.stopPropagation();
     this.questionService.updateQuestionParam(key, 'status', 'notResolve');
   }
-
-
+  onListStyleLine() {
+    this.isListLine = true;
+  }
+  onListStyleSquare() {
+    this.isListLine = false;
+  }
 }

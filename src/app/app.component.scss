@@ -82,7 +82,7 @@ select {
 
 
 header{
-  margin-bottom: 10px;
+
   background-color: darkslategrey;
   .header__logo{
     padding: 10px;
@@ -98,6 +98,18 @@ header{
     button{
       margin-left: 10px;
     }
+  }
+}
+.app{
+  padding-top: 10px;
+  min-height: 100vh;
+}
+.app-dark {
+  background-color: black;
+  color: #9ba8b5;
+  border-color: #9ba8b5;
+  .form-control {
+    background-color: #6c757d;
   }
 }
 .globalButton{
