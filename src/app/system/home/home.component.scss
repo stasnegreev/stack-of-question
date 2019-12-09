@@ -19,11 +19,19 @@
   .questions__list {
     display: flex;
     flex-wrap: wrap;
+
     .questions__item{
-      width: 100%;
+      margin: 0 5px;
+      &:first-child{
+        margin-left: 0;
+      }
+      &:last-child{
+        margin-right: 0;
+      }
     }
   }
   .questions__list-line {
+    width: 100%;
   }
 }
 .question{
