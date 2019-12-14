@@ -32,7 +32,7 @@ export class CreateQuestionComponent implements OnInit {
       'title': new FormControl(
         '',
         [Validators.required],
-        [this.forbiddenTitle.bind(this)]
+        [this.questionService.forbiddenTitle]
       ),
       'text': new FormControl(
         '',
@@ -63,20 +63,5 @@ export class CreateQuestionComponent implements OnInit {
     this.router.navigate(['/system/home']);
   }
 
-  forbiddenTitle(control: FormControl): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.db.list('questions', ref => ref.orderByChild('title').equalTo(control.value)).valueChanges()
-        .subscribe((questions: Question[]) => {
-          console.log('forbiddenTitle questions=', questions);
-          if (questions.length) {
-            console.log('novalid');
-            resolve({forbiddenTitle: true});
-          } else {
-            console.log('valid');
-            resolve(null);
-          }
-          //have i to close this subscribtion?
-        });
-    });
-  }
+
 }

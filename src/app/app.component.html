@@ -42,7 +42,7 @@
             *ngIf="curentUrl.indexOf('system')+1"
           >
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{userData.name.slice(0,userData.name.indexOf('@'))}}
+              {{userData?.name.slice(0,userData.name.indexOf('@'))}}
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
               <a

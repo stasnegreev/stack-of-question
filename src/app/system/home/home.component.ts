@@ -10,7 +10,7 @@ import {UserData} from "../../shared/module/userData.model";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, DoCheck {
+export class HomeComponent implements OnInit {
   @Output() onFilterOpen = new EventEmitter<any>();
 
   isListLine = false;
@@ -36,8 +36,6 @@ export class HomeComponent implements OnInit, DoCheck {
   ) { }
 
   ngOnInit() {
-    this.userData = JSON.parse(window.localStorage.getItem('user'));
-    console.log('HomeComponent ngOnInit userId');
     this.questionService.getAllQuestions()
       .subscribe((questions: Question[]) => {
         console.log('HomeComponent ngOnInit questions', questions);
@@ -45,12 +43,13 @@ export class HomeComponent implements OnInit, DoCheck {
         this.onFilterApply(this.filterParams);
         this.isLoaded = true;
       });
-  }
-  ngDoCheck(): void {
-    this.userData = JSON.parse(window.localStorage.getItem('user'));
-    if (this.userData.status === 'admin') {
-      this.filterParams.status.push('notApproved');
-    }
+    this.userService.getUserData()
+      .subscribe((userData) => {
+        this.userData = userData;
+        if (userData.status === 'admin') {
+          this.filterParams.status.push('notApproved');
+        }
+      });
   }
 
   openFilter() {

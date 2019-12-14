@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserData} from "../../shared/module/userData.model";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'soq-profile',
@@ -10,10 +11,12 @@ export class ProfileComponent implements OnInit {
 
   userData: UserData;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
-    this.userData = JSON.parse(window.localStorage.getItem('user'));
+    //this.userData = this.authService.getUserData();
   }
 
 }

@@ -6,6 +6,7 @@ import {Question} from "../shared/models/question.model";
 import {CommentNew} from "../shared/models/commentNew.model";
 import {UserData} from "../../shared/module/userData.model";
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'soq-question',
@@ -13,7 +14,7 @@ import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
   styleUrls: ['./question.component.scss']
 })
 export class QuestionComponent implements OnInit {
-
+  textNewComment: string;
   questionId: any;
   question: Question;
   comments: any;
@@ -32,6 +33,8 @@ export class QuestionComponent implements OnInit {
     private questionService: QuestionService,
     private userService: UserService,
     private router: Router,
+    private authService: AuthService,
+
   ) { }
 
   ngOnInit() {
@@ -40,7 +43,7 @@ export class QuestionComponent implements OnInit {
       .subscribe((question: Question) => {
         this.question = question;
         console.log('QuestionComponent ngOnInit question=', question);
-        this.userService.getUserData(question.author)
+        this.userService.getUserData()
           .subscribe((data: UserData) => {
             this.userData = data;
             console.log('QuestionComponent ngOnInit this.userData=', this.userData );
@@ -52,11 +55,11 @@ export class QuestionComponent implements OnInit {
 
       });
     this.questionService.getComments(this.questionId)
-      .subscribe((d: any) => {
-        this.comments = d;
-        this.comments.map((i) => {
-          this.userService.getUserData(i.author)
-            .subscribe((data: UserData) => i.author = data.name);
+      .subscribe((comments: any) => {
+        this.comments = comments;
+        this.comments.map((comment) => {
+          this.userService.getUserDataByKey(comment.author)
+            .subscribe((data: UserData) => comment.author = data.name);
         });
         console.log('comments=', this.comments);
       });
@@ -68,18 +71,19 @@ export class QuestionComponent implements OnInit {
     this.newComment = new CommentNew(form.value.text, this.userData.id, 'notResolve', ((new Date()) + ''));
     console.log('QuestionComponent addComment this.newComment', this.newComment);
     this.questionService.addComment(this.questionId, this.newComment).then(r => console.log('addeded comment'));
+    this.textNewComment = '';
   }
   checkRules() {
-    this.userService.getUserData(this.question.author)
+    this.userService.getUserDataByKey(this.question.author)
       .subscribe((data: UserData) => {
-        if (JSON.parse(window.localStorage.getItem('user')).status === 'admin') {
-          this.rules.delete = true;
-        };
-        if (data.name === JSON.parse(window.localStorage.getItem('user')).name) {
+        //if (this.authService.getUserData().status === 'admin') {
+         // this.rules.delete = true;
+        //}
+        //if (data.name === this.authService.getUserData().name) {
           this.rules.resolveComment = true;
           this.rules.delete = true;
           this.rules.edit = true;
-        }
+       // }
         console.log('QuestionComponent checkRules this.rules.edit=', this.rules);
       });
   }

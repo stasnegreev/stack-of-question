@@ -10,7 +10,7 @@
     align-items: baseline;
   }
   .question__title{
-    width: 100%;
+    //width: 100%;
     padding: 10px 0;
     border-bottom: 2px darkslategrey solid;
     text-align: center;
@@ -62,7 +62,7 @@
   margin-bottom: 10px;
 
   .comment__user {
-    width: 50px;
+    display: block;
     margin-right: 20px;
   }
   .comment__text {
@@ -70,7 +70,7 @@
     text-align: left;
   }
   .comment__info {
-    width: 125px;
+    width: 180px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -90,13 +90,12 @@
   &:last-child{
     margin-bottom: 0;
   }
-  .question__tag{
-    padding: 0 5px;
-    border-right: 2px darkslategrey solid;
-  }
-  .question__tag:last-child{
-    border-right: none;
-    padding-right: 0;
+
+
+}
+@media (max-width: 768px) {
+  .comment {
+    flex-direction: column;
   }
 }
 

@@ -52,7 +52,7 @@ export class EddingQuestionComponent implements OnInit {
       'title': new FormControl(
         '',
         [Validators.required],
-        [this.forbiddenTitle.bind(this)]
+        [this.questionService.forbiddenTitle]
       ),
       'text': new FormControl(
         '',
@@ -83,25 +83,6 @@ export class EddingQuestionComponent implements OnInit {
     this.router.navigate(['/system/question'], {fragment: this.questionId});
   }
 
-  forbiddenTitle(control: FormControl): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.db.list('questions', ref => ref.orderByChild('title').equalTo(control.value)).valueChanges()
-        .subscribe((questions: Question[]) => {
-          console.log('forbiddenTitle questions=', questions);
-          if (questions.length) {
-            if (questions[0].title !== this.question.title) {
-              console.log('novalid', questions);
-              resolve({forbiddenTitle: true});
-            }
-
-          } else {
-            console.log('valid');
-            resolve(null);
-          }
-          //have i to close this subscribtion?
-        });
-    });
-  }
   goBack() {
     this.location.back();
   }

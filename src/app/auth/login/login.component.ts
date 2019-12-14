@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private usersServise: UserService,
+    private userServise: UserService,
     private title: Title,
     private router: Router,
     private route: ActivatedRoute,
@@ -47,65 +47,102 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const email = this.loginForm.value.email + '';
     const password = this.loginForm.value.password + '';
-    this.usersServise.signInByEmail(email, password).then(
+    this.userServise.signInByEmail(email, password).then(
       (result) => {
-        console.log('signInByEmail result=', result);
-        this.login();
+        this.userServise.getUserData()
+          .subscribe((userData: UserData) => {
+            if (userData) {
+              this.login(userData);
+            } else {
+              const uId = this.userServise.getUserId();
+              const newUserData = new UserData(result.user.email, 'user', uId);
+              this.userServise.addUserToBd(uId, newUserData).then(
+                () => {
+                  console.log('onRegGoogle addUserToBd');
+                  this.login(userData);
+                  return;
+                },
+                (error) => {
+                  this.message.showMessage('danger', 'Error of registration');
+                  console.log('onRegGoogle promise error=', error);
+                  return;
+                }
+              );
+            }
+          });
       },
       (error) => {
-        this.message.showMessage('danger', 'This email is no exist');
-        console.log('promise error=', error);
+        this.message.showMessage('danger', error);
       }
     );
 
   }
 
   onRegGoogle() {
-    this.usersServise.createNewUserByGoogle().then(
-      (result) => {
-        console.log('onRegGoogle result=', result);
-        const uId = this.usersServise.getUserId();
-        const userData = new UserData(result.user.email, 'user', uId);
-        const key = result.user.uid;
-        this.usersServise.addUserToBd(key, userData).then(
-          () => {
-            console.log('signUpByEmail addUserToBdr=');
-            this.login();
-            return;
-          },
-          (error) => {
-            this.message.showMessage('danger', 'Error of registration');
-            console.log('signUpByEmail promise error=', error);
-            return;
-          }
-        );
-      },
-      (error) => console.log('promise error=', error)
-    );
-  }
-
-  onRegFacebook() {
-    this.usersServise.createNewUserByFacebook().then(
-      (result) => {
-        console.log('promise result=', result);
-        this.login();
+    this.userServise.createNewUserByGoogle().then(
+      (result: any) => {
+        this.userServise.getUserData()
+          .subscribe((userData: UserData) => {
+            if (userData) {
+              this.login(userData);
+            } else {
+              const uId = this.userServise.getUserId();
+              const newUserData = new UserData(result.user.email, 'user', uId);
+              this.userServise.addUserToBd(uId, newUserData).then(
+                () => {
+                  console.log('onRegGoogle addUserToBd');
+                  this.login(userData);
+                  return;
+                },
+                (error) => {
+                  this.message.showMessage('danger', 'Error of registration');
+                  console.log('onRegGoogle promise error=', error);
+                  return;
+                }
+              );
+            }
+          });
       },
       (error) => {
-        console.log('promise error=', error);
-        this.message.text = error.description;
+        this.message.showMessage('danger', error);
       }
     );
   }
 
-  login() {
-    const uId = this.usersServise.getUserId();
-    this.usersServise.getUserData(uId)
-      .subscribe((userData: UserData) => {
+  onRegFacebook() {
+    this.userServise.createNewUserByFacebook().then(
+      (result: any) => {
+        this.userServise.getUserData()
+          .subscribe((userData: UserData) => {
+            if (userData) {
+              this.login(userData);
+            } else {
+              const uId = this.userServise.getUserId();
+              const newUserData = new UserData(result.user.email, 'user', uId);
+              this.userServise.addUserToBd(uId, newUserData).then(
+                () => {
+                  console.log('onRegGoogle addUserToBd');
+                  this.login(userData);
+                  return;
+                },
+                (error) => {
+                  this.message.showMessage('danger', 'Error of registration');
+                  console.log('onRegGoogle promise error=', error);
+                  return;
+                }
+              );
+            }
+          });
+      },
+      (error) => {
+        this.message.showMessage('danger', error);
+      }
+    );
+  }
 
-        window.localStorage.setItem('user', JSON.stringify(userData));
-        this.authService.login();
-        this.router.navigate(['system/home']);
-      });
+  login(userData) {
+    this.authService.login(userData);
+    this.router.navigate(['system/home']);
   }
 }
 

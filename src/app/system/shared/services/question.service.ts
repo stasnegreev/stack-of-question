@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {map} from 'rxjs/operators';
 import {CommentNew} from "../models/commentNew.model";
 import {ActivatedRoute, Router} from "@angular/router";
+import {FormControl} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,21 @@ export class QuestionService {
   changeCommentStatus(questionKey: string, commentKey: string, value: string) {
     return this.db.object('/comments/' + questionKey + '/' + commentKey).update({status: value});
   }
-
+  forbiddenTitle = (control: FormControl): Promise<any> => {
+    return new Promise<any>((resolve, reject) => {
+      this.db.list('questions', ref => ref.orderByChild('title').equalTo(control.value)).valueChanges()
+        .subscribe((questions: Question[]) => {
+          console.log('forbiddenTitle questions=', questions);
+          if (questions.length) {
+            console.log('novalid');
+            resolve({forbiddenTitle: true});
+          } else {
+            console.log('valid');
+            resolve(null);
+          }
+          //have i to close this subscribtion?
+        });
+    });
+  }
 }
 

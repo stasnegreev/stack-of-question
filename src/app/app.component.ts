@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, DoCheck, OnChanges, OnInit} from '@angular/core';
 
 import { Observable } from 'rxjs';
 import {AngularFireDatabase} from '@angular/fire/database';
@@ -13,32 +13,34 @@ import {UserData} from "./shared/module/userData.model";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, DoCheck {
+export class AppComponent implements OnInit {
 
   userData: UserData;
+  isLoaded = false;
   private curentUrl = '';
   private isLogin: boolean;
 
   constructor(
     private authService: AuthService,
     private router: Router,
+    private userService: UserService,
     public afAuth: AngularFireAuth,
   ) {}
 
 
 
   ngOnInit() {
-    this.userData = JSON.parse(window.localStorage.getItem('user'));
-    console.log('router=', this.router.routerState.snapshot);
-    this.isLogin = this.authService.isLoggedIn();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.curentUrl = this.router.routerState.snapshot.url;
       }
     });
-  }
-  ngDoCheck(): void {
-    this.userData = JSON.parse(window.localStorage.getItem('user'));
+    this.authService.getUserData()
+      .subscribe((userData: UserData) => {
+        this.userData = userData;
+        console.log('AppComponent ngOnInit authService.getUserData userData=', userData);
+      });
+    this.router.navigate(['system/home']);
   }
 
   onLogOut() {

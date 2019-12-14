@@ -46,37 +46,37 @@ export class RegistrationComponent implements OnInit {
     const user = new User(email, password);
     console.log('user=', user);
     this.usersServise.createNewUserByEmail(user)
-      .then((result) => {
-        console.log('signUpByEmail promise result=', result);
-        const uId = this.usersServise.getUserId();
-        const userData = new UserData(result.user.email, 'user', uId);
-        const key = result.user.uid;
-        this.usersServise.addUserToBd(key, userData).then(
-          () => {
-            return;
-          },
-          (error) => {
-            this.message.showMessage('danger', error.message);
-            console.log('signUpByEmail promise error=', error);
-            return;
-          }
-        );
-        this.router.navigate(['/login'], {
-          queryParams: {
-            nowCanLogin: true
-          }
-        });
-      },
-      (error) => {
-        console.log('createNewUserByEmail error');
-        this.message.showMessage('danger', error.message);
-        console.log('signUpByEmail promise error=', error);
-      }
-    );
+      .then(
+        (result) => {
+          console.log('signUpByEmail promise result=', result);
+          const uId = this.usersServise.getUserId();
+          const userData = new UserData(result.user.email, 'user', uId);
+          const key = result.user.uid;
+          this.usersServise.addUserToBd(key, userData).then(
+            () => {
+              this.router.navigate(['/login'], {
+                queryParams: {
+                  nowCanLogin: true
+                }
+              });
+            },
+            (error) => {
+              this.message.showMessage('danger', error.message);
+              console.log('signUpByEmail promise error=', error);
+              return;
+            }
+          );
+        },
+        (error) => {
+          console.log('createNewUserByEmail error');
+          this.message.showMessage('danger', error.message);
+          console.log('signUpByEmail promise error=', error);
+        }
+      );
   }
   onRegGoogle() {
     this.usersServise.createNewUserByGoogle().then(
-      (result) => {
+      (result: any) => {
         console.log('onRegGoogle result=', result);
         const uId = this.usersServise.getUserId();
         const userData = new UserData(result.user.email, 'user', uId);
@@ -87,7 +87,7 @@ export class RegistrationComponent implements OnInit {
             this.login();
             return;
           },
-          (error) => {
+          (error: any) => {
             this.message.showMessage('danger', 'Error of registration');
             console.log('signUpByEmail promise error=', error);
             return;
@@ -112,11 +112,9 @@ export class RegistrationComponent implements OnInit {
   }
   login() {
     const uId = this.usersServise.getUserId();
-    this.usersServise.getUserData(uId)
+    this.usersServise.getUserDataByKey(uId)
       .subscribe((userData: UserData) => {
-
-        window.localStorage.setItem('user', JSON.stringify(userData));
-        this.authService.login();
+        this.authService.login(userData);
         this.router.navigate(['system/home']);
       });
   }
