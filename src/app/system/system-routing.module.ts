@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AppComponent} from '../app.component';
 import {SystemComponent} from './system.component';
-import {AuthGuard} from '../shared/services/auth.guard';
 import {AngularFireAuthGuard, redirectUnauthorizedTo} from '@angular/fire/auth-guard';
 import {HomeComponent} from "./home/home.component";
 import {CreateQuestionComponent} from "./create-question/create-question.component";

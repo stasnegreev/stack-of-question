@@ -15,10 +15,8 @@ export class HomeComponent implements OnInit {
 
   isListLine = false;
   isLoaded = false;
-  userStatus: string;
   questions: Question[];
   filteredQuestion: Question[];
-  data = [];
   isFilterOpen = false;
   isAscending = false;
   userData: UserData;
@@ -59,29 +57,30 @@ export class HomeComponent implements OnInit {
     this.isFilterOpen = false;
   }
   onFilterApply(filterParams: any) {
+    console.log('this.filterParams', this.filterParams);
+
     this.filterParams = filterParams;
     let dateFrom: any;
     if (!filterParams.dateFrom) {
       console.log('this.filterParams.dateFrom', this.filterParams.dateFrom);
       dateFrom = 0;
     } else {
-      console.log('this.filterParams.dateFrom', this.filterParams.dateFrom);
-      dateFrom = +(new Date(filterParams.dateFrom));
+      dateFrom = +new Date(filterParams.dateFrom);
     }
     let dateTo: any;
     if (!filterParams.dateTo) {
       console.log('this.filterParams.dateTo', this.filterParams.dateTo);
       dateTo = new Date(+new Date() + 99999999);
     } else {
-      console.log('this.filterParams.dateTo', this.filterParams.dateTo);
-      dateTo = +(new Date(filterParams.dateTo));
+      dateTo = +new Date(filterParams.dateTo) + 86400000;
     }
     const status = filterParams.status;
     const tags = filterParams.tags;
-    console.log('HomeComponent onFilterApply with next filterParams=', 'dateFrom', dateFrom, 'dateTo',  dateTo, 'status', status, 'tags', tags);
     this.filteredQuestion = this.questions.filter((question) => {
         if (status.indexOf(question.status) + 1) {
-          if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo) {
+
+          if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo ) {
+
             if (!question.tags) {
               return tags.indexOf('noTags') + 1;
             }

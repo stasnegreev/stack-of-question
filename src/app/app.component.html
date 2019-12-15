@@ -1,66 +1,70 @@
 <header>
   <div class="container">
 
-    <div class="row">
-      <div class="col">
-        <div class="header__logo">
-          <img src="assets/image/logo.png">
-        </div>
+    <div class="header">
+      <div class="header__logo">
+        <img src="assets/image/logo.png">
       </div>
-      <div class="col">
-        <div class="header__button">
+
+        <button
+          *ngIf="curentUrl==='/login'"
+          class="btn badge-info header__button"
+          routerLink="/registration"
+        >
+          SignUp
+        </button>
+        <button
+          *ngIf="curentUrl==='/registration'"
+          class="btn badge-info header__button"
+          routerLink = "/login"
+        >
+          LogIn
+        </button>
+        <button
+          *ngIf="curentUrl.indexOf('uestion')+1 || curentUrl.indexOf('profile')+1"
+          class="btn badge-info header__button"
+          routerLink="/system/home"
+        >
+          Home
+        </button>
+        <button
+          *ngIf="curentUrl.indexOf('home')+1"
+          class="btn badge-info header__button"
+          routerLink="/system/createQuestion"
+        >
+          New question
+        </button>
+        <div
+          class="dropdown "
+          *ngIf="curentUrl.indexOf('system')+1"
+        >
           <button
-            *ngIf="curentUrl==='/login'"
-            class="btn badge-info"
-            routerLink="/registration"
-          >
-            SignUp
-          </button>
-          <button
-            *ngIf="curentUrl==='/registration'"
-            class="btn badge-info"
-            routerLink = "/login"
-          >
-            LogIn
-          </button>
-          <button
-            *ngIf="curentUrl.indexOf('uestion')+1 || curentUrl.indexOf('profile')+1"
-            class="btn badge-info"
-            routerLink="/system/home"
-          >
-            Home
-          </button>
-          <button
-            *ngIf="curentUrl.indexOf('home')+1"
-            class="btn badge-info"
-            routerLink="/system/createQuestion"
-          >
-            New question
+            class="btn btn-secondary dropdown-toggle header__button"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
+            {{userData?.name.slice(0,userData.name.indexOf('@'))}}
           </button>
           <div
-            class="dropdown"
-            *ngIf="curentUrl.indexOf('system')+1"
-          >
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{userData?.name.slice(0,userData.name.indexOf('@'))}}
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <a
-                class="dropdown-item"
-                routerLink="/system/profile"
-              >
-                Profile
-              </a>
-              <a
-                class="dropdown-item"
-                (click)="onLogOut()"
-              >
-                SignOut
-              </a>
-            </div>
+            class="dropdown-menu dropdown-menu-right"
+            aria-labelledby="dropdownMenuButton">
+            <a
+              class="dropdown-item"
+              routerLink="/system/profile"
+            >
+              Profile
+            </a>
+            <a
+              class="dropdown-item"
+              (click)="onLogOut()"
+            >
+              SignOut
+            </a>
           </div>
         </div>
-      </div>
+
     </div>
   </div>
 </header>

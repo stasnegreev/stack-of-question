@@ -82,21 +82,44 @@ select {
 
 
 header{
-
   background-color: darkslategrey;
+  .header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 20px 0;
+  }
+
   .header__logo{
-    padding: 10px;
+    width: 100%;
+    min-width: 50px;
+
     img{
       height: 50px;
+      min-width: 50px;
     }
   }
   .header__button {
-    display: flex;
-    justify-content: flex-end;
+    margin-left: 10px;
+    white-space: nowrap;
     padding: 10px;
-    margin-left: 20px;
+    height: 60px;
     button{
-      margin-left: 10px;
+
+    }
+  }
+}
+@media (max-width: 576px) {
+  header{
+    .header {
+      flex-wrap: wrap;
+      justify-content: center;
+      .header__logo{
+        margin: 0 50% 10px 50%;
+
+      }
     }
   }
 }

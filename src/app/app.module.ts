@@ -12,7 +12,6 @@ import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {SystemModule} from './system/system.module';
 import {AuthService} from './shared/services/auth.service';
 import {UserService} from './shared/services/user.service';
-import {AuthGuard} from './shared/services/auth.guard';
 import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
 
 @NgModule({
@@ -33,7 +32,6 @@ import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
   providers: [
     UserService,
     AuthService,
-    AuthGuard,
     AngularFireAuthGuard,
   ],
   bootstrap: [
