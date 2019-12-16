@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@angular/router";
 import {EMPTY, Observable, of} from "rxjs";
 import {AuthService} from "./auth.service";
-import {map, tap} from "rxjs/operators";
+import {catchError, map, take, tap} from "rxjs/operators";
 import {UserData} from "../module/userData.model";
 import {UserService} from "./user.service";
 
@@ -10,8 +10,7 @@ import {UserService} from "./user.service";
 export class AuthResovler implements Resolve<any> {
 
   constructor(
-    private router: Router,
-    private userService: UserService,
+    public userService: UserService,
   ) {}
 
   resolve(
@@ -21,7 +20,10 @@ export class AuthResovler implements Resolve<any> {
     console.log('resolve');
     const id = this.userService.getUserId();
     if (id) {
-      return this.userService.getUserDataByKey(id);
+      return this.userService.getUserDataByKey(id).pipe(
+        take(1),
+        map((data: any) => data)
+      );
     } else {
       return EMPTY;
     }

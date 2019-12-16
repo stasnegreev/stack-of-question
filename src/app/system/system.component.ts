@@ -12,6 +12,8 @@ import {UserData} from "../shared/module/userData.model";
 })
 export class SystemComponent implements OnInit {
 
+  public userData: UserData;
+
   constructor(
     private authService: AuthService,
     private usersServise: UserService,
@@ -24,8 +26,8 @@ export class SystemComponent implements OnInit {
   ngOnInit() {
 
     this.activatedRoute.data
-      .subscribe((userData) => {
-        console.log('tada=', userData);
+      .subscribe((data) => {
+        console.log('tada=', data.userData);
       });
 
     this.router.navigate(['system/home']);
