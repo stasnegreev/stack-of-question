@@ -9,15 +9,15 @@ import {QuestionComponent} from "./question/question.component";
 import {EddingQuestionComponent} from './edding-question/edding-question.component';
 import {HomeFilterComponent} from './home/home-filter/home-filter.component';
 import {ProfileComponent} from "./profile/profile.component";
+import {AuthResovler} from "../shared/services/auth.resolver.service";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const routes: Routes = [
-  //{path: 'system', component: SystemComponent, canActivate: [AuthGuard]},
   {path: 'system',
     component: SystemComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin},
-
+    resolve: {userData: AuthResovler},
     children: [
       {path: 'home', component: HomeComponent},
       {path: 'createQuestion', component: CreateQuestionComponent},

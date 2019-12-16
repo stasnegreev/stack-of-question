@@ -79,37 +79,49 @@ select {
   }
 }
 
-.app{
-  min-height: 100vh;
-}
-.app-dark {
-  background-color: black;
-  color: #9ba8b5;
-  border-color: #9ba8b5;
-  .form-control {
-    background-color: #6c757d;
+
+
+header{
+  background-color: darkslategrey;
+  .header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  .header__logo{
+    width: 100%;
+    min-width: 50px;
+
+    img{
+      height: 50px;
+      min-width: 50px;
+    }
+  }
+  .header__button {
+    margin-left: 10px;
+    white-space: nowrap;
+    padding: 10px;
+    height: 60px;
+    button{
+
+    }
   }
 }
-.globalButton{
-  position: fixed;
-  right: 50px;
-  bottom: 100px;
-}
-.circleButton{
-  position: relative;
-  top: 20px;
-  width: 50px;
-  height: 50px;
-  background-color: #1f7e9a;
-  border-radius: 50%;
-  text-align: center;
-  vertical-align: center;
-  font-size: 50px;
-  color: white;
-  p{
-    position: absolute;
-    top: -18px;
-    left: 8px;
+@media (max-width: 576px) {
+  header{
+    .header {
+      flex-wrap: wrap;
+      justify-content: center;
+      .header__logo{
+        margin: 0 50% 10px 50%;
+
+      }
+    }
   }
 }
+
 

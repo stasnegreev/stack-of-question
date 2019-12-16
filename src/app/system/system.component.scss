@@ -1,0 +1,25 @@
+.system {
+  padding-top: 20px;
+}
+.globalButton{
+  position: fixed;
+  right: 50px;
+  bottom: 100px;
+}
+.circleButton{
+  position: relative;
+  top: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #1f7e9a;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: center;
+  font-size: 50px;
+  color: white;
+  p{
+    position: absolute;
+    top: -18px;
+    left: 8px;
+  }
+}

@@ -13,6 +13,7 @@ import {SystemModule} from './system/system.module';
 import {AuthService} from './shared/services/auth.service';
 import {UserService} from './shared/services/user.service';
 import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
+import {AuthResovler} from "./shared/services/auth.resolver.service";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {AngularFireAuthGuard} from '@angular/fire/auth-guard';
     UserService,
     AuthService,
     AngularFireAuthGuard,
+    AuthResovler,
   ],
   bootstrap: [
     AppComponent

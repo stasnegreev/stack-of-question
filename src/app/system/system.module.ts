@@ -12,6 +12,7 @@ import { HomeFilterComponent } from './home/home-filter/home-filter.component';
 import { FilterByDatePipe } from './shared/pipes/filter-by-date.pipe';
 import { UserNamePipe } from './shared/pipes/user-name.pipe';
 import { ProfileComponent } from './profile/profile.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ProfileComponent } from './profile/profile.component';
     FilterByDatePipe,
     UserNamePipe,
     ProfileComponent,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,

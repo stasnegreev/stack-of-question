@@ -4,23 +4,38 @@ import {Router} from "@angular/router";
 import {UserData} from "../module/userData.model";
 import {observable, of, Subject} from "rxjs";
 import {UserService} from "./user.service";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
   public isLogged = false;
-  public userData: UserData;
-  public subject = new Subject<UserData>();
+  private userId: string;
+  public  userData: UserData;
 
   constructor(
     private afAuth: AngularFireAuth,
     private userService: UserService,
-  ) {}
+  ) {
+    this.afAuth.authState
+      .subscribe((auth) => {
+        this.userId = auth.uid;
+        if (this.userId) {
+          this.userService.getUserDataByKey(this.userId)
+            .subscribe((userData: UserData) => {
+              this.userData = userData;
+              console.log('AuthService  login this.userData=', this.userData);
+              this.isLogged = true;
+            });
+        }
+      });
 
-  login(userData: UserData) {
-    this.userData = userData;
-    this.subject.next(this.userData);
+  }
+
+  login() {
+
     this.isLogged = true;
     console.log('AuthService  login this.userData=', this.userData);
   }
@@ -32,22 +47,9 @@ export class AuthService {
     this.isLogged = false;
   }
   isLoggedIn() {
-    return this.isLogged;
+    return of(this.isLogged);
   }
-  getUserData() {
-    return this.subject.asObservable();
-    console.log('AuthService getUserData');
-    if (this.userData) {
-      console.log('AuthService getUserData return old');
-      return of(this.userData);
-    } else {
-      this.userService.getUserData()
-        .subscribe((userData: UserData) => {
-          this.userData = userData;
-          this.subject.next(this.userData);
-          console.log('AuthService getUserData return new this.userData=', this.userData);
-          return this.subject.asObservable();
-        });
-    }
+  getUserData(): UserData {
+    return this.userData;
   }
 }

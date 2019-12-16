@@ -1,0 +1,29 @@
+<header>
+  <div class="container">
+
+    <div class="header">
+      <div class="header__logo">
+        <img src="assets/image/logo.png">
+      </div>
+
+      <button
+        *ngIf="curentUrl==='login'"
+        class="btn badge-info header__button"
+        routerLink="/registration"
+      >
+        SignUp
+      </button>
+      <button
+        *ngIf="curentUrl==='registration'"
+        class="btn badge-info header__button"
+        routerLink = "/login"
+      >
+        LogIn
+      </button>
+    </div>
+  </div>
+</header>
+
+
+
+

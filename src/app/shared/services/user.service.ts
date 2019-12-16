@@ -35,20 +35,22 @@ export class UserService {
   }
   getUserId() {
     console.log('UserService getUserId this.afAuth.auth.currentUser=', this.afAuth.auth.currentUser);
-    if (this.afAuth.auth.currentUser) {
-      return this.afAuth.auth.currentUser.uid;
-    }
-    return null;
+    return this.afAuth.auth.currentUser.uid;
+
   }
 
   addUserToBd(key: string, userData: UserData) {
     return this.db.object('/users/' + key).set(userData);
   }
   getUserData(): Observable<any> {
+    console.log('getUserData');
     const key = this.getUserId();
+    console.log('getUserData key=', key);
     return this.db.object('/users/' + key).valueChanges();
   }
   getUserDataByKey(key): Observable<any> {
-        return this.db.object('/users/' + key).valueChanges();
+    console.log('getUserData key=', key);
+
+    return this.db.object('/users/' + key).valueChanges();
   }
 }

@@ -4,6 +4,7 @@ import {Question} from '../shared/models/question.model';
 import {AuthService} from "../../shared/services/auth.service";
 import {UserService} from "../../shared/services/user.service";
 import {UserData} from "../../shared/module/userData.model";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'soq-home',
@@ -31,6 +32,7 @@ export class HomeComponent implements OnInit {
     private questionService: QuestionService,
     private authService: AuthService,
     private userService: UserService,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -41,13 +43,9 @@ export class HomeComponent implements OnInit {
         this.onFilterApply(this.filterParams);
         this.isLoaded = true;
       });
-    this.userService.getUserData()
-      .subscribe((userData) => {
-        this.userData = userData;
-        if (userData.status === 'admin') {
-          this.filterParams.status.push('notApproved');
-        }
-      });
+    if (this.userData.status === 'admin') {
+      this.filterParams.status.push('notApproved');
+    }
   }
 
   openFilter() {

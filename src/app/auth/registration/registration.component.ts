@@ -114,7 +114,7 @@ export class RegistrationComponent implements OnInit {
     const uId = this.usersServise.getUserId();
     this.usersServise.getUserDataByKey(uId)
       .subscribe((userData: UserData) => {
-        this.authService.login(userData);
+        this.authService.login();
         this.router.navigate(['system/home']);
       });
   }

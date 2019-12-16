@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(userData) {
-    this.authService.login(userData);
+    this.authService.login();
     this.router.navigate(['system/home']);
   }
 }
