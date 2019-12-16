@@ -20,6 +20,7 @@ export class QuestionComponent implements OnInit {
   comments: any;
   newComment: CommentNew;
   userData: UserData;
+  questionAuthor: string;
   isLoaded = false;
   rules = {
     delete: false,
@@ -38,54 +39,45 @@ export class QuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.userData = this.authService.userData;
     this.questionId = this.route.snapshot.fragment;
     this.questionService.getQuestionById(this.questionId)
       .subscribe((question: Question) => {
         this.question = question;
-        console.log('QuestionComponent ngOnInit question=', question);
-        this.userService.getUserData()
-          .subscribe((data: UserData) => {
-            this.userData = data;
-            console.log('QuestionComponent ngOnInit this.userData=', this.userData );
+        this.checkRules();
+        this.userService.getUserDataByKey(question.author)
+          .subscribe((userData) => {
+            this.questionAuthor = userData.name;
             this.checkRules();
-            this.isLoaded = true;
-
-        });
+          });
         console.log('QuestionComponent OnInit question=', this.question);
-
       });
     this.questionService.getComments(this.questionId)
       .subscribe((comments: any) => {
         this.comments = comments;
-        this.comments.map((comment) => {
-          this.userService.getUserDataByKey(comment.author)
-            .subscribe((data: UserData) => comment.author = data.name);
-        });
         console.log('comments=', this.comments);
+        this.isLoaded = true;
       });
+
   }
 
   addComment(form: NgForm) {
     console.log('QuestionComponent addComment form', form);
-    const user: string = this.userService.getUserId() + '';
-    this.newComment = new CommentNew(form.value.text, this.userData.id, 'notResolve', ((new Date()) + ''));
+    this.newComment = new CommentNew(form.value.text, this.userData.id, this.userData.name,  'notResolve', ((new Date()) + ''));
     console.log('QuestionComponent addComment this.newComment', this.newComment);
     this.questionService.addComment(this.questionId, this.newComment).then(r => console.log('addeded comment'));
     this.textNewComment = '';
   }
   checkRules() {
-    this.userService.getUserDataByKey(this.question.author)
-      .subscribe((data: UserData) => {
-        //if (this.authService.getUserData().status === 'admin') {
-         // this.rules.delete = true;
-        //}
-        //if (data.name === this.authService.getUserData().name) {
-          this.rules.resolveComment = true;
-          this.rules.delete = true;
-          this.rules.edit = true;
-       // }
-        console.log('QuestionComponent checkRules this.rules.edit=', this.rules);
-      });
+    if (this.userData.status === 'admin') {
+      this.rules.delete = true;
+    }
+    if (this.question.author === this.userData.id) {
+      this.rules.resolveComment = true;
+      this.rules.delete = true;
+      this.rules.edit = true;
+    }
+    console.log('QuestionComponent checkRules this.rules.edit=', this.rules);
   }
 
   onResolve(commentKey: string, value: string) {

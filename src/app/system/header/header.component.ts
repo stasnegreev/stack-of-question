@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
 
 
   ngOnInit() {
+    this.userData = this.authService.userData;
     this.curentUrl = this.route.children[0].routeConfig.path;
     this.router.events
       .subscribe(event => {

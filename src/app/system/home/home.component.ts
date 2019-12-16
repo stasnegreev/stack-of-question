@@ -36,6 +36,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.userData = this.authService.userData;
+    console.log('HomeComponent ngOnInit this.userData=', this.authService.userData);
+
     this.questionService.getAllQuestions()
       .subscribe((questions: Question[]) => {
         console.log('HomeComponent ngOnInit questions', questions);

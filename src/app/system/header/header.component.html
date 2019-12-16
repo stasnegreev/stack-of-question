@@ -46,7 +46,7 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          {{userData.name}}
+          {{userData.name.slice(0, userData.name.indexOf('@'))}}
         </button>
         <div
           class="dropdown-menu dropdown-menu-right"

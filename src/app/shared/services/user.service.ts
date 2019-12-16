@@ -6,6 +6,7 @@ import {auth} from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFireDatabase} from "@angular/fire/database";
 import {UserData} from "../module/userData.model";
+import {map, take} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'

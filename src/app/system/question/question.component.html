@@ -8,7 +8,7 @@
     <div class="question__header ">
       <div class="question_row">
         <div class="question__author">
-          {{userData.name.slice(0,userData.name.indexOf('@'))}}
+          {{questionAuthor?.slice(0,questionAuthor.indexOf('@'))}}
         </div>
         <div class="question__date">
           {{question.date | date:"M.d.yy"}}
@@ -109,7 +109,6 @@
           </div>
           <div
             class="comment__resolve"
-
           >
             <input
               *ngIf="rules.resolveComment"

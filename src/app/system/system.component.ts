@@ -24,12 +24,11 @@ export class SystemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.activatedRoute.data
       .subscribe((data) => {
-        console.log('tada=', data.userData);
+        this.authService.userData = data.userData;
+        console.log('SystemComponent ngOnInit this.userData=', this.authService.userData);
       });
-
     this.router.navigate(['system/home']);
   }
 

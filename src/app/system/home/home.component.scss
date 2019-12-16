@@ -9,6 +9,11 @@
     display: flex;
     justify-content: space-between;
   }
+  .dropdown-item:active{
+    background-color: inherit;
+    color: inherit;
+  }
+
 }
 .header-dark{
   border-color: #9ba8b5;
@@ -27,6 +32,11 @@
     border-color: #9ba8b5;
 
   }
+  .dropdown-item.active, .dropdown-item:active{
+    background-color: inherit;
+    color: inherit;
+  }
+
 }
 .questions {
 

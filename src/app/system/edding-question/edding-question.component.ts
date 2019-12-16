@@ -52,7 +52,7 @@ export class EddingQuestionComponent implements OnInit {
       'title': new FormControl(
         '',
         [Validators.required],
-        [this.questionService.forbiddenTitle]
+        [this.forbiddenTitle]
       ),
       'text': new FormControl(
         '',
@@ -89,6 +89,25 @@ export class EddingQuestionComponent implements OnInit {
   checkEditing() {
     return JSON.stringify(this.form.value) === this.JSONform;
   }
-
+  forbiddenTitle = (control: FormControl): Promise<any> => {
+    return new Promise<any>((resolve, reject) => {
+      this.db.list('questions', ref => ref.orderByChild('title').equalTo(control.value)).valueChanges()
+        .subscribe((questions: Question[]) => {
+          console.log('forbiddenTitle questions=', questions);
+          if (questions.length) {
+            console.log('novalid');
+            if (control.value === this.question.title) {
+              console.log('valid');
+              resolve(null);
+            }
+            resolve({forbiddenTitle: true});
+          } else {
+            console.log('valid');
+            resolve(null);
+          }
+          //have i to close this subscribtion?
+        });
+    });
+  }
 
 }
