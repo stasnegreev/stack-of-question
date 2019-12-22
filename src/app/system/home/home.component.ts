@@ -31,8 +31,6 @@ export class HomeComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
     private authService: AuthService,
-    private userService: UserService,
-    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -58,7 +56,8 @@ export class HomeComponent implements OnInit {
     this.isFilterOpen = false;
   }
   onFilterApply(filterParams: any) {
-    console.log('this.filterParams', this.filterParams);
+    console.log('this.filterParams', filterParams);
+    console.log('this.questions', this.questions);
 
     this.filterParams = filterParams;
     let dateFrom: any;
@@ -79,18 +78,25 @@ export class HomeComponent implements OnInit {
     const tags = filterParams.tags;
     this.filteredQuestion = this.questions.filter((question) => {
         if (status.indexOf(question.status) + 1) {
+          console.log('this.filterParams status');
 
           if (+new Date(question.date) >= dateFrom && +new Date(question.date) <= dateTo ) {
+            console.log('this.filterParams date');
 
             if (!question.tags) {
+              console.log('this.filterParams noTags', question.tags.indexOf('noTags') + 1);
+
               return tags.indexOf('noTags') + 1;
             }
             return tags.some((tag) => {
+              console.log('this.filterParams Tags', question.tags.indexOf(tag) + 1);
               return question.tags.indexOf(tag) + 1;
             });
           }
         }
     });
+    console.log('this.filteredQuestion', this.filteredQuestion);
+
     this.onFilterCancel();
   }
   sortByData() {
